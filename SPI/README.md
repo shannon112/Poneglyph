@@ -73,6 +73,6 @@ void loop() {
 # Reference
 [1] https://en.wikipedia.org/wiki/Serial_Peripheral_Interface  
 [2] https://www.analog.com/media/en/analog-dialogue/volume-52/number-3/introduction-to-spi-interface.pdf  
-[3] https://www.allaboutcircuits.com/technical-articles/spi-serial-peripheral-interface/
-[4] https://www.youtube.com/watch?v=ZGaCXHvgcE4
+[3] https://www.allaboutcircuits.com/technical-articles/spi-serial-peripheral-interface/  
+[4] https://www.youtube.com/watch?v=ZGaCXHvgcE4  
 [5] https://www.youtube.com/watch?v=fvOAbDMzoks
