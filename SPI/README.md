@@ -34,19 +34,21 @@ Depending on the CPOL and CPHA bit selection, four SPI modes are available.[2]
 <img src="https://raw.githubusercontent.com/shannon112/Notes/main/SPI/data_transmission_mode_table.png" height=250> <img src="https://raw.githubusercontent.com/shannon112/Notes/main/SPI/data_transmission_mode_fig.png" height=250>
 
 # Multislave Configuration
-- Regular SPI 
-<img src="https://raw.githubusercontent.com/shannon112/Notes/main/SPI/multislave_regular.png" width=400>
+- Regular SPI  
+  An individual chip select for each slave is required from the master. Once the chip select signal is enabled (pulled low) by the master, the clock and data on    the MOSI/MISO lines are available for the selected slave. If multiple chip select signals are enabled, the data on the MISO line is **corrupted**, as there is no way for the master to identify which slave is transmitting the data.[2]  
+<img src="https://raw.githubusercontent.com/shannon112/Notes/main/SPI/multislave_regular.png" width=600>
 
-- Daisy-Chain 
-<img src="https://raw.githubusercontent.com/shannon112/Notes/main/SPI/multislave_daisy_chain.png" width=400>
-<img src="https://raw.githubusercontent.com/shannon112/Notes/main/SPI/multislave_daisy_chain2.png" width=400>
+- Daisy-Chain  
+The chip select signal for all slaves is tied together and data propagates from one slave to the next. All slaves receive the same SPI clock at the same time. The data from the master is directly connected to the first slave and that slave provides data to the next slave and so on.  
+The number of clock cycles required to transmit data is proportional to the slave position in the daisy chain. For example, in an 8-bit system, 24 clock pulses are required for the data to be available on the 3rd slave, compared to only eight clock pulses in regular SPI mode. Daisy-chain mode is not necessarily supported by all SPI devices. Please refer to the product data sheet to confirm if daisy chain is available.[2]  
+<img src="https://raw.githubusercontent.com/shannon112/Notes/main/SPI/multislave_daisy_chain.png" height=250> <img src="https://raw.githubusercontent.com/shannon112/Notes/main/SPI/multislave_daisy_chain2.png" height=250>
 
 # Pros and cons 
 - Advantages
   -
   -
 - Disadvantages
-  - 這也是SPI的缺點之一，相較於I2C是用Address，SPI用SS會導致每多接一個device的話master就要多一條線
+  - 這也是SPI的缺點之一，相較於I2C是用Address，SPI用SS會導致每多接一個device的話master就要多一條線 As can be seen from Figure 6, as the number of slaves increases, the number of chip select lines from the master increases. This can quickly add to the number of inputs and outputs needed from the master and limit the number of slaves that can be used. There are different techniques that can be used to increase the number of slaves in regular mode; for example, using a mux to generate a chip select signal.
   -
 
 # Demo: SPI LED Shift Register
