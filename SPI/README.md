@@ -44,12 +44,39 @@ The number of clock cycles required to transmit data is proportional to the slav
   <img src="https://raw.githubusercontent.com/shannon112/Notes/main/SPI/multislave_daisy_chain.png" height=250> <img src="https://raw.githubusercontent.com/shannon112/Notes/main/SPI/multislave_daisy_chain2.png" height=250>
 
 # Pros and cons 
-- Advantages
-  -
-  -
-- Disadvantages
-  - 這也是SPI的缺點之一，相較於I2C是用Address，SPI用SS會導致每多接一個device的話master就要多一條線 As can be seen from Figure 6, as the number of slaves increases, the number of chip select lines from the master increases. This can quickly add to the number of inputs and outputs needed from the master and limit the number of slaves that can be used. There are different techniques that can be used to increase the number of slaves in regular mode; for example, using a mux to generate a chip select signal.
-  -
+- Advantages [1]  
+  - Full duplex communication in the default version of this protocol
+  - Push-pull drivers (as opposed to open drain) provide good signal integrity and high speed
+  - Higher throughput than I²C or SMBus. Not limited to any maximum clock speed, enabling potentially high speed
+  - Complete protocol flexibility for the bits transferred
+    - Not limited to 8-bit words
+    - Arbitrary choice of message size, content, and purpose
+  - Extremely simple hardware interfacing
+    - Typically lower power requirements than I²C or SMBus due to less circuitry (including pull up resistors)
+    - No arbitration or associated failure modes - unlike CAN-bus
+    - Slaves use the master's clock and do not need precision oscillators
+    - Slaves do not need a unique address – unlike I²C or GPIB or SCSI
+    - Transceivers are not needed - unlike CAN-bus
+  - Uses only four pins on IC packages, and wires in board layouts or connectors, much fewer than parallel interfaces
+  - At most one unique bus signal per device (chip select); all others are shared
+  - Signals are unidirectional allowing for easy galvanic isolation
+  - Simple software implementation
+- Disadvantages [1]  
+  - As the number of slaves increases, the number of chip select lines from the master increases. This can quickly add to the number of inputs and outputs needed from the master and limit the number of slaves that can be used. There are different techniques that can be used to increase the number of slaves in regular mode; for example, using a 3-to-8 demux/decoder to generate a chip select signal.
+  - Requires more pins on IC packages than I²C, even in the three-wire variant
+  - No in-band addressing; out-of-band chip select signals are required on shared buses
+  - Extensibility severely reduced when multiple slaves using different SPI Modes are required. Access is slowed down when master frequently needs to reinitialize in different modes.
+  - No hardware flow control by the slave (but the master can delay the next clock edge to slow the transfer rate)
+  - No hardware slave acknowledgment (the master could be transmitting to nowhere and not know it)
+  - Typically supports only one master device (depends on device's hardware implementation)
+  - No error-checking protocol is defined
+  - Without a formal standard, validating conformance is not possible
+  - Only handles short distances compared to RS-232, RS-485, or CAN-bus. (Its distance can be extended with the use of transceivers like RS-422.)
+  - Opto-isolators in the signal path limit the clock speed for MISO transfer because of the added delays between clock and data
+  - Many existing variations, making it difficult to find development tools like host adapters that support those variations
+  - SPI does not support hot swapping (dynamically adding nodes).
+  - Interrupts must either be implemented with out-of-band signals or be faked by using periodic polling similarly to USB 1.1 and 2.0.
+  - Some variants like dual SPI, quad SPI, and three-wire serial buses defined below are half-duplex.
 
 # Demo: SPI LED Shift Register
 Original experiment from: https://core-electronics.com.au/tutorials/arduino-workshop-for-beginners.html [4]
