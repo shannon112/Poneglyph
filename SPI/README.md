@@ -35,7 +35,7 @@ Depending on the CPOL and CPHA bit selection, four SPI modes are available.[2]
 
 # Multislave Configuration
 - Regular SPI  
-  An individual chip select for each slave is required from the master. Once the chip select signal is enabled (pulled low) by the master, the clock and data on    the MOSI/MISO lines are available for the selected slave. If multiple chip select signals are enabled, the data on the MISO line is **corrupted**, as there is no way for the master to identify which slave is transmitting the data.[2]  
+An individual chip select for each slave is required from the master. Once the chip select signal is enabled (pulled low) by the master, the clock and data on    the MOSI/MISO lines are available for the selected slave. If multiple chip select signals are enabled, the data on the MISO line is **corrupted**, as there is no way for the master to identify which slave is transmitting the data.[2]  
 <img src="https://raw.githubusercontent.com/shannon112/Notes/main/SPI/multislave_regular.png" width=600>
 
 - Daisy-Chain  
