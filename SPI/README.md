@@ -19,12 +19,19 @@ The **Serial Peripheral Interface** (SPI，發音類似spy) is a synchronous ser
 <img src="https://raw.githubusercontent.com/shannon112/Notes/main/SPI/SPI_interface.png" width=400>
 
 # Data Transmission
-<img src="https://raw.githubusercontent.com/shannon112/Notes/main/SPI/data_transmission_gif1.gif" width=400>
-<img src="https://raw.githubusercontent.com/shannon112/Notes/main/SPI/data_transmission_gif2.gif" width=400>
+To begin SPI communication, the master must send the clock signal and select the slave by enabling the CS signal. Usually chip select is an active low signal; hence, the master must send a logic 0 on this signal to select the slave. SPI is a full-duplex interface; both master and slave can send data at the same time via the MOSI and MISO lines respectively. During SPI communication, the data is simultaneously transmitted (shifted out serially onto the MOSI/SDO bus) and received (the data on the bus (MISO/SDI) is sampled or read in). The serial clock edge synchronizes the shifting and sampling of the data. The SPI interface provides the user with flexibility to select the rising or falling edge of the clock to sample and/or shift the data (see next section). Please refer to the device data sheet to determine the number of data bits transmitted using the SPI interface. [2]
+
+<img src="https://raw.githubusercontent.com/shannon112/Notes/main/SPI/data_transmission_gif1.gif" width=600>
+<img src="https://raw.githubusercontent.com/shannon112/Notes/main/SPI/data_transmission_gif2.gif" width=600>
 
 # Data Mode (Clock Polarity and Clock Phase)
-<img src="https://raw.githubusercontent.com/shannon112/Notes/main/SPI/data_transmission_mode_table.png" width=400>
-<img src="https://raw.githubusercontent.com/shannon112/Notes/main/SPI/data_transmission_mode_fig.png" width=400>
+The CPOL bit sets the polarity of the clock signal during the idle state.   
+The idle state is defined as the period when CS/SS is high.  
+The CPHA bit selects the clock phase. The rising or falling clock edge is used to sample and/or shift the data.  
+The master must select the clock polarity and clock phase, as per the requirement of the slave.  
+Depending on the CPOL and CPHA bit selection, four SPI modes are available.[2]  
+(Red lines denote clock leading edges, and blue lines, trailing edges.)[1]  
+<img src="https://raw.githubusercontent.com/shannon112/Notes/main/SPI/data_transmission_mode_table.png" height=250> <img src="https://raw.githubusercontent.com/shannon112/Notes/main/SPI/data_transmission_mode_fig.png" height=250>
 
 # Multislave Configuration
 - Regular SPI 
@@ -39,7 +46,7 @@ The **Serial Peripheral Interface** (SPI，發音類似spy) is a synchronous ser
   -
   -
 - Disadvantages
-  -
+  - 這也是SPI的缺點之一，相較於I2C是用Address，SPI用SS會導致每多接一個device的話master就要多一條線
   -
 
 # Demo: SPI LED Shift Register
