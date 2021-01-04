@@ -14,6 +14,7 @@ The Serial Peripheral Interface (SPI，發音類似spy) is a synchronous serial 
 - SS/ CS：Slave Select/Chip Select 從選。LOW表示裝置可以與Master通訊；HIGH表示不與Master通訊。只是普通的digital pin，default是pin10，但可以設成別的，not restricted to pin10，any digital pin is ok。
 - SDO: Serial Data Out. An output signal on a device where data is sent out to another 
 - SDI: Serial Data In.
+<img src="https://raw.githubusercontent.com/shannon112/Notes/main/SPI/SPI_interface.png" width=100>
 
 # Reference
 [1] https://en.wikipedia.org/wiki/Serial_Peripheral_Interface  
