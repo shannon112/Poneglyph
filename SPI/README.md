@@ -8,7 +8,7 @@ The **Serial Peripheral Interface** (SPI，發音類似spy) is a synchronous ser
 - **High speed**, SPI > I2C > UART, SPI devices support much higher clock frequencies compared to I2C interfaces, so it is suitable for SDcard module.  
 - **Short distance**, around 20cm, UART > I2C > SPI.
 
-# Interface
+# Interface:
 - **MISO**：Master In, Slave Out 主入從出. Transmits data from the master to the slave.
 - **MOSI**：Master Out, Slave In 主出從入. Transmits data from the slave to the master.
 - **SCK/ SCLK/ Clock**：Serial Clock 串列時脈. The device that generates the clock signal is called the master.
@@ -19,8 +19,20 @@ The **Serial Peripheral Interface** (SPI，發音類似spy) is a synchronous ser
 <img src="https://raw.githubusercontent.com/shannon112/Notes/main/SPI/SPI_interface.png" width=400>
 
 # Data Transmission
+<img src="https://raw.githubusercontent.com/shannon112/Notes/main/SPI/data_transmission_gif1.gif" width=400>
+<img src="https://raw.githubusercontent.com/shannon112/Notes/main/SPI/data_transmission_gif2.gif" width=400>
 
 # Data Mode (Clock Polarity and Clock Phase)
+<img src="https://raw.githubusercontent.com/shannon112/Notes/main/SPI/data_transmission_mode_table.png" width=400>
+<img src="https://raw.githubusercontent.com/shannon112/Notes/main/SPI/data_transmission_mode_fig.png" width=400>
+
+# Multislave Configuration
+- Regular SPI 
+<img src="https://raw.githubusercontent.com/shannon112/Notes/main/SPI/multislave_regular.png" width=400>
+
+- Daisy-Chain 
+<img src="https://raw.githubusercontent.com/shannon112/Notes/main/SPI/multislave_daisy_chain.png" width=400>
+<img src="https://raw.githubusercontent.com/shannon112/Notes/main/SPI/multislave_daisy_chain2.png" width=400>
 
 # Pros and cons 
 - Advantages
@@ -30,7 +42,7 @@ The **Serial Peripheral Interface** (SPI，發音類似spy) is a synchronous ser
   -
   -
 
-# Demo: SPI LED Shift Register [3]
+# Demo: SPI LED Shift Register [4]
 
 <img src="https://raw.githubusercontent.com/shannon112/Notes/main/SPI/SPI_LED_Shift_Register.png" width=400>
 
@@ -61,4 +73,6 @@ void loop() {
 # Reference
 [1] https://en.wikipedia.org/wiki/Serial_Peripheral_Interface  
 [2] https://www.analog.com/media/en/analog-dialogue/volume-52/number-3/introduction-to-spi-interface.pdf  
-[3] https://www.youtube.com/watch?v=ZGaCXHvgcE4
+[3] https://www.allaboutcircuits.com/technical-articles/spi-serial-peripheral-interface/
+[4] https://www.youtube.com/watch?v=ZGaCXHvgcE4
+[5] https://www.youtube.com/watch?v=fvOAbDMzoks
