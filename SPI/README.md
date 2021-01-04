@@ -42,9 +42,10 @@ The **Serial Peripheral Interface** (SPI，發音類似spy) is a synchronous ser
   -
   -
 
-# Demo: SPI LED Shift Register [4]
+# Demo: SPI LED Shift Register
+Original experiment from: https://core-electronics.com.au/tutorials/arduino-workshop-for-beginners.html [4]
 
-<img src="https://raw.githubusercontent.com/shannon112/Notes/main/SPI/SPI_LED_Shift_Register.png" width=400>
+<img src="https://raw.githubusercontent.com/shannon112/Notes/main/SPI/SPI_LED_Shift_Register.png" width=600>
 
 ```
 #include <SPI.h>
@@ -69,6 +70,14 @@ void loop() {
   }
 }
 ```
+- 74HC595: "8-bit serial-in, serial or parallel-out shift register with output latches; 3-state."   
+  https://www.arduino.cc/en/Tutorial/Foundations/ShiftOut
+- slaveSelect: can choose any digital pin, not restrict to pin10 on arduino
+- SPI.setBitOrder: depend the slave device spec/datasheet. 像是頭先進還是尾巴先進  
+  ```MSB (Most Significant Bit) Bit7, LSB (Least Significant Bit) Bit0```
+- SPI.setDataMode: depend the slave device spec/datasheet. Mode 0~3 as mentioned above.
+- SPI.transfer: 可以傳int, hex, binary等等.  
+  ```250//int, 0xFA//hex, B11111010//binary```
 
 # Reference
 [1] https://en.wikipedia.org/wiki/Serial_Peripheral_Interface  
