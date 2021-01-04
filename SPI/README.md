@@ -31,7 +31,9 @@ The **Serial Peripheral Interface** (SPI，發音類似spy) is a synchronous ser
   -
 
 # Demo: SPI LED Shift Register [3]
+
 <img src="https://raw.githubusercontent.com/shannon112/Notes/main/SPI/SPI_LED_Shift_Register.png" width=400>
+
 ```
 #include <SPI.h>
 
