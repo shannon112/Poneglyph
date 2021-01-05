@@ -83,7 +83,7 @@ Original experiment from: https://core-electronics.com.au/tutorials/arduino-work
 
 <img src="https://raw.githubusercontent.com/shannon112/Notes/main/SPI/SPI_LED_Shift_Register.png" width=600>
 
-```
+```c
 #include <SPI.h>
 
 int slaveSelect = 2;
