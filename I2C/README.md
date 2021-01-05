@@ -37,45 +37,55 @@ Original experiment from: https://howtomechatronics.com/tutorials/arduino/how-i2
 
 ```c
 #include <Wire.h>
-int ADXLAddress = 0x53; // Device address in which is also included the 8th bit for selecting the mode, read in this case.
-#define X_Axis_Register_DATAX0 0x32 // Hexadecima address for the DATAX0 internal register.
-#define X_Axis_Register_DATAX1 0x33 // Hexadecima address for the DATAX1 internal register.
+
+int ADXLAddress = 0x53; // Device address 
+#define X_Axis_Register_DATAX0 0x32 // Internal register addresses
+#define X_Axis_Register_DATAX1 0x33 // Internal registers addresses
 #define Power_Register 0x2D // Power Control Register
+
 int X0,X1,X_out;
 void setup() {
-  Wire.begin(); // Initiate the Wire library
+  // Initiate
+  Wire.begin(); 
   Serial.begin(9600);
   delay(100);
+  
   // Enable measurement
   Wire.beginTransmission(ADXLAddress);
   Wire.write(Power_Register);
+  
   // Bit D3 High for measuring enable (0000 1000)
   Wire.write(8);  
   Wire.endTransmission();
 }
+
 void loop() {
-  Wire.beginTransmission(ADXLAddress); // Begin transmission to the Sensor 
+  // Begin transmission to the Sensor
+  Wire.beginTransmission(ADXLAddress);  
   //Ask the particular registers for data
   Wire.write(X_Axis_Register_DATAX0);
   Wire.write(X_Axis_Register_DATAX1);
+  // Ends the transmission and transmits the data from the two registers
+  Wire.endTransmission(); 
+  // Request the transmitted two bytes from the two registers
+  Wire.requestFrom(ADXLAddress,2); 
   
-  Wire.endTransmission(); // Ends the transmission and transmits the data from the two registers
-  
-  Wire.requestFrom(ADXLAddress,2); // Request the transmitted two bytes from the two registers
-  
-  if(Wire.available()<=2) {  // 
-    X0 = Wire.read(); // Reads the data from the register
+  // Reads the data from the register
+  if(Wire.available()<=2) { 
+    X0 = Wire.read(); 
     X1 = Wire.read();   
   }
   
+  // Print the raw data
   Serial.print("X0= ");
   Serial.print(X0);
-  Serial.print("   X1= ");
+  Serial.print(", X1= ");
   Serial.println(X1);
 }
 ```
 - GY-80 consists 5 different sensors and the GY-521 consists 3 different sensors. But there are only 5 device address.
 - The device address and internal registers address can be found in datasheet.
+- The device address included the 8th bit (read mode in this case)
 
 # Open Drain v.s. Push Pull
 When you configure the GPIO pin of a microcontroller as Output. The Output pin can either be as Open-Drain type or  Push-Pull Type. Both these configurations tell us how the GPIO pin of uC is designed internally. In most cases the push-pull type will be more advantageous than Open Drain Type. And modern MCUs have Push-Pull type [3]
