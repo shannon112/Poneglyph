@@ -2,6 +2,7 @@
 The **Inter-Integrated Circuit** (I2C, pronounced I-squared-C) is a synchronous, multi-master, multi-slave, packet switched, single-ended, serial communication bus invented in 1982 by Philips Semiconductor (now NXP Semiconductors). It is widely used for attaching lower-speed peripheral ICs to processors and microcontrollers in short-distance, intra-board communication. Alternatively, I2C is spelled I2C (pronounced I-two-C) or IIC (pronounced I-I-C). Typical applications include GY series IMU and RTC clock module.[1]
 
 # Character:
+- **Serial communication bus**, with contrary to Parallel
 - **Master-Slave-Based**, multi-master, multi-slave.
 - **Half-Duplex communication**, sharing one SDA line, can transmit and receive data, but not at the same time.
 - **Synchronous communication**, the data from the master or the slave is synchronized on the clock edge.
