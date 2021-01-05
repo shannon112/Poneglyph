@@ -20,8 +20,8 @@ address and maximum slave device數量？
 
 # Data Transmission
 ddd
-<img src="https://raw.githubusercontent.com/shannon112/Notes/main/I2C/data_transmission.png" width=600>
-<img src="https://raw.githubusercontent.com/shannon112/Notes/main/I2C/data_transmission2.png" width=600>
+<img src="https://raw.githubusercontent.com/shannon112/Notes/main/I2C/data_transmission.jpg" width=600>
+<img src="https://raw.githubusercontent.com/shannon112/Notes/main/I2C/data_transmission2.jpg" width=600>
 
 # Multi-device Configuration
 ddd
@@ -33,8 +33,7 @@ ddd
 # Demo: I2C GY-80 and GY-521 Reading
 Original experiment from: https://howtomechatronics.com/tutorials/arduino/how-i2c-communication-works-and-how-to-use-it-with-arduino/ [2]
 
-<img src="https://raw.githubusercontent.com/shannon112/Notes/main/I2C/GY_address.png" width=400>
-<img src="https://raw.githubusercontent.com/shannon112/Notes/main/I2C/Connection.png" width=400>
+<img src="https://raw.githubusercontent.com/shannon112/Notes/main/I2C/GY_address.png" height=250> <img src="https://raw.githubusercontent.com/shannon112/Notes/main/I2C/Connection.png" height=250>
 
 ```c
 #include <Wire.h>
