@@ -15,6 +15,23 @@ The **Inter-Integrated Circuit** (I2C, pronounced I-squared-C) is a synchronous,
 Since I2C is **active low**, if the two lines are “open-drain”, they need pull-up resistors such as 2K and 10K for 400kbps and 100kbps speed. Moreover, the **Arduino Uno has pullup resistors built in** that pull the SDA and SCK to 5 volts. An example schematic with one master (a microcontroller), three slave nodes (an ADC, a DAC, and a microcontroller), and pull-up resistors Rp is shown below.
 <img src="https://raw.githubusercontent.com/shannon112/Notes/main/I2C/I2C_interface.png" width=400>
 
+# Speed
+- Standard mode: 100 kbit/s (common I2C bus speed)
+- Fast mode: 400 kbit/s (common I2C bus speed)
+- Low-speed mode: 10 kbit/s, but arbitrarily low clock frequencies are also allowed. 
+
+Recent revisions of I2C can host more nodes and run at faster speeds (400 kbit/s Fast mode, 1 Mbit/s Fast mode plus, 3.4 Mbit/s High Speed mode, and 5 Mbit/s Ultra Fast-mode). These speeds are more widely used on embedded systems than on PCs. 
+
+# Address
+- 7-bit addressing
+  <img src="https://raw.githubusercontent.com/shannon112/Notes/main/I2C/7-bit_addressing.png" width=400>
+- 10-bit addressing
+  <img src="https://raw.githubusercontent.com/shannon112/Notes/main/I2C/10-bit_addressing.png" width=400>
+- Reserved addresses in 7-bit address space (保留)
+  <img src="https://raw.githubusercontent.com/shannon112/Notes/main/I2C/Reserved_addresses.png" width=400>
+- Non-reserved addresses in 7-bit address space (常見)
+  <img src="https://raw.githubusercontent.com/shannon112/Notes/main/I2C/Non-reserved_addresses.png" width=400>
+
 # Data Transmission
 The data signal is transferred in sequences of 8 bits. The start condition occurs when data line drops low while the clock line is still high. After this the clock starts and each data bit is transferred during each clock pulse. The first 8 bits sequence which indicates the address of the slave (e.g. accelerometer ADXL345 in GY-80) to which the data is being sent. After each 8 bits sequence follows a bit called Acknowledge. After the first Acknowledge bit in most cases comes another addressing sequence but this time for the internal registers of the slave device (e.g. x-axis reading in ADXL345). Right after the addressing sequences follows the data sequences as many until the data is completely sent and it ends with a special stop condition.[2]  
 - The start condition occurs when data line drops low while the clock line is still high.
@@ -27,8 +44,17 @@ The data signal is transferred in sequences of 8 bits. The start condition occur
 <img src="https://raw.githubusercontent.com/shannon112/Notes/main/I2C/data_transmission2.jpg" width=700>
 
 # Pros and cons 
-- Advantages [1]  
+- Advantages  
+  - with clock, synchronous
+  - simple configuration in 2 wires, but up to hundreds of devices
 - Disadvantages [1]  
+  - Address management: The assignment of slave addresses is one weakness of I2C. Seven bits is too few to prevent address collisions between the many thousands of available devices. What alleviates the issue of address collisions between different vendors and also allows to connect to several identical devices is that manufacturers dedicate pins that can be used to set the slave address to one of a few address options per device. Two or three pins is typical, and with many devices, there are three or more wiring options per address pin.
+  - 10-bit I2C addresses are not yet widely used, and many host operating systems do not support them. 
+  - Bus configuration: Automatic bus configuration is a related issue. A given address may be used by a number of different protocol-incompatible devices in various systems, and hardly any device types can be detected at runtime. For example, 0x51 may be used by a 24LC02 or 24C32 EEPROM, with incompatible addressing; or by a PCF8563 RTC, which cannot reliably be distinguished from either (without changing device state, which might not be allowed). The only reliable configuration mechanisms available to hosts involve out-of-band mechanisms such as tables provided by system firmware, which list the available devices. Again, this issue can partially be addressed by ARP in SMBus systems, especially when vendor and product identifiers are used; but that has not really caught on. The rev. 03 version of the I2C specification adds a device ID mechanism.
+  - Speed: I2C supports a limited range of speeds. Hosts supporting the multi-megabit speeds are rare. Support for the Fm+ 1 Mbit/s speed is more widespread, since its electronics are simple variants of what is used at lower speeds. Many devices do not support the 400 kbit/s speed (in part because SMBus does not yet support it). I2C nodes implemented in software (instead of dedicated hardware) may not even support the 100 kbit/s speed; so the whole range defined in the specification is rarely usable. All devices must at least partially support the highest speed used or they may spuriously detect their device address.
+  - Devices are allowed to stretch clock cycles to suit their particular needs, which can starve bandwidth needed by faster devices and increase latencies when talking to other device addresses. Bus capacitance also places a limit on the transfer speed, especially when current sources are not used to decrease signal rise times.
+  - Potential faults: Because I2C is a shared bus, there is the potential for any device to have a fault and hang the entire bus. For example, if any device holds the SDA or SCL line low, it prevents the master from sending START or STOP commands to reset the bus. Thus it is common for designs to include a reset signal that provides an external method of resetting the bus devices. However many devices do not have a dedicated reset pin, forcing the designer to put in circuitry to allow devices to be power-cycled if they need to be reset.
+  - Because of these limits (address management, bus configuration, potential faults, speed), few I2C bus segments have even a dozen devices. It is common for systems to have several such segments. One might be dedicated to use with high-speed devices, for low-latency power management. Another might be used to control a few devices where latency and throughput are not important issues; yet another segment might be used only to read EEPROM chips describing add-on cards (such as the SPD standard used with DRAM sticks). 
 
 # Demo: I2C GY-80 and GY-521 Reading
 Original experiment from: https://howtomechatronics.com/tutorials/arduino/how-i2c-communication-works-and-how-to-use-it-with-arduino/ [2]
