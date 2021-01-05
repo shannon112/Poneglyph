@@ -2,6 +2,7 @@
 The **Serial Peripheral Interface** (SPI，發音類似spy) is a synchronous serial communication interface specification used for short-distance communication, primarily in embedded systems. The interface was developed by Motorola in the mid-1980s and has become a de facto standard (a custom or convention that has achieved a dominant position by public acceptance or market forces). Typical applications include Secure Digital cards (SD card) and liquid crystal displays (LCD). [1]
 
 # Character:
+- **Serial communication bus**, with contrary to Parallel
 - **Master-Slave-Based**, can have only one master and can have one or multiple slaves.
 - **Full duplex communication**, send and receive simultaneously, both master and slave can transmit data at the same time.
 - **Synchronous communication**, the data from the master or the slave is synchronized on the rising or falling clock edge.
