@@ -74,7 +74,7 @@ void loop() {
 }
 ```
 - GY-80 consists 5 different sensors and the GY-521 consists 3 different sensors. But there are only 5 device address.
-- The device address and internal registers address can be found in datasheet
+- The device address and internal registers address can be found in datasheet.
 
 # Open Drain v.s. Push Pull
 When you configure the GPIO pin of a microcontroller as Output. The Output pin can either be as Open-Drain type or  Push-Pull Type. Both these configurations tell us how the GPIO pin of uC is designed internally. In most cases the push-pull type will be more advantageous than Open Drain Type. And modern MCUs have Push-Pull type [3]
@@ -84,5 +84,5 @@ When you configure the GPIO pin of a microcontroller as Output. The Output pin c
 
 # Reference
 [1] https://en.wikipedia.org/wiki/I%C2%B2C  
-[2] https://www.youtube.com/watch?v=6IAkYpmA1DQ
+[2] https://www.youtube.com/watch?v=6IAkYpmA1DQ  
 [3] https://circuitdigest.com/forums/embedded/difference-between-open-drain-and-push-pull
