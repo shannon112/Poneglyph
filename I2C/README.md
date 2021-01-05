@@ -25,7 +25,6 @@ ddd
 
 # Multi-device Configuration
 ddd
-<img src="https://raw.githubusercontent.com/shannon112/Notes/main/SPI/multislave_daisy_chain.png" height=250> <img src="https://raw.githubusercontent.com/shannon112/Notes/main/SPI/multislave_daisy_chain2.png" height=250>
 
 # Pros and cons 
 - Advantages [1]  
@@ -34,10 +33,10 @@ ddd
 # Demo: I2C GY-80 and GY-521 Reading
 Original experiment from: https://howtomechatronics.com/tutorials/arduino/how-i2c-communication-works-and-how-to-use-it-with-arduino/ [2]
 
-<img src="https://raw.githubusercontent.com/shannon112/Notes/main/I2C/GY_address.png" width=600>
-<img src="https://raw.githubusercontent.com/shannon112/Notes/main/I2C/Connection.png" width=600>
+<img src="https://raw.githubusercontent.com/shannon112/Notes/main/I2C/GY_address.png" width=400>
+<img src="https://raw.githubusercontent.com/shannon112/Notes/main/I2C/Connection.png" width=400>
 
-```
+```c
 #include <Wire.h>
 int ADXLAddress = 0x53; // Device address in which is also included the 8th bit for selecting the mode, read in this case.
 #define X_Axis_Register_DATAX0 0x32 // Hexadecima address for the DATAX0 internal register.
@@ -86,5 +85,5 @@ void loop() {
   ```250//int, 0xFA//hex, B11111010//binary```
 
 # Reference
-[1] https://en.wikipedia.org/wiki/I%C2%B2C
+[1] https://en.wikipedia.org/wiki/I%C2%B2C  
 [2] https://www.youtube.com/watch?v=6IAkYpmA1DQ
