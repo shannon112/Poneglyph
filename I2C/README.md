@@ -15,12 +15,15 @@ Since I2C is **active low**, if the two lines are “open-drain”, they need pu
 <img src="https://raw.githubusercontent.com/shannon112/Notes/main/I2C/I2C_interface.png" width=400>
 
 # Data Transmission
-ddd  
-<img src="https://raw.githubusercontent.com/shannon112/Notes/main/I2C/data_transmission.jpg" width=600>
-<img src="https://raw.githubusercontent.com/shannon112/Notes/main/I2C/data_transmission2.jpg" width=600>
-
-# Multi-device Configuration
-ddd
+The data signal is transferred in sequences of 8 bits. The start condition occurs when data line drops low while the clock line is still high. After this the clock starts and each data bit is transferred during each clock pulse. The first 8 bits sequence which indicates the address of the slave (e.g. accelerometer ADXL345 in GY-80) to which the data is being sent. After each 8 bits sequence follows a bit called Acknowledge. After the first Acknowledge bit in most cases comes another addressing sequence but this time for the internal registers of the slave device (e.g. x-axis reading in ADXL345). Right after the addressing sequences follows the data sequences as many until the data is completely sent and it ends with a special stop condition.[2]  
+- The start condition occurs when data line drops low while the clock line is still high.
+- The device addressing sequence stars with the most significant bit (MSB) first and ends with the least significant bit (LSB)
+- The first 8 bits sequence composed of 7 bits address, and the 8th bit is used for indicating whether the master will write to the slave (logic low) or read from it (logic high).
+- The next bit AKC/ NACK is used by the slave device to indicate whether it has successfully received the previous sequence of bits. The master device hands the control of the SDA line over to the slave device and if the slave device has successfully received the previous sequence it will pull the SDA line down, it is called Acknowledge. If the slave does not pull the SDA line down, the condition is called Not Acknowledge, and means that it didn’t successfully received the previous sequence which can be caused by several reasons. For example, the slave might be busy, might not understand the received data or command, cannot receive any more data and so on. In such a case the master device decides how it will proceed.
+- The internal registers addressing: The internal registers are locations in the slave’s memory containing various information or data. For example the ADX345 Accelerometer has a unique device address and addition internal registers addresses for the X, Y and Z axis. So if we want to read the data of the X-axis, first we need to send the device address and then the particular internal register address for the X-axis. These addresses can be found from datasheet of the sensor.
+- After the addressing, the data transfer sequences begin either from the master or the slave depending of the selected mode at the R/W bit. After the data is completely sent, the transfer will end with a stop condition which occurs when the SDA line goes from low to high while the SCL line is high.
+<img src="https://raw.githubusercontent.com/shannon112/Notes/main/I2C/data_transmission.jpg" width=700>
+<img src="https://raw.githubusercontent.com/shannon112/Notes/main/I2C/data_transmission2.jpg" width=700>
 
 # Pros and cons 
 - Advantages [1]  
@@ -70,14 +73,8 @@ void loop() {
   Serial.println(X1);
 }
 ```
-- 74HC595: "8-bit serial-in, serial or parallel-out shift register with output latches; 3-state."   
-  https://www.arduino.cc/en/Tutorial/Foundations/ShiftOut
-- slaveSelect: can choose any digital pin, not restrict to pin10 on arduino
-- SPI.setBitOrder: depend the slave device spec/datasheet. 像是頭先進還是尾巴先進  
-  ```MSB (Most Significant Bit) Bit7, LSB (Least Significant Bit) Bit0```
-- SPI.setDataMode: depend the slave device spec/datasheet. Mode 0~3 as mentioned above.
-- SPI.transfer: 可以傳int, hex, binary等等.  
-  ```250//int, 0xFA//hex, B11111010//binary```
+- GY-80 consists 5 different sensors and the GY-521 consists 3 different sensors. But there are only 5 device address.
+- The device address and internal registers address can be found in datasheet
 
 # Open Drain v.s. Push Pull
 When you configure the GPIO pin of a microcontroller as Output. The Output pin can either be as Open-Drain type or  Push-Pull Type. Both these configurations tell us how the GPIO pin of uC is designed internally. In most cases the push-pull type will be more advantageous than Open Drain Type. And modern MCUs have Push-Pull type [3]
