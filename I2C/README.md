@@ -23,13 +23,13 @@ Since I2C is **active low**, if the two lines are “open-drain”, they need pu
 Recent revisions of I2C can host more nodes and run at faster speeds (400 kbit/s Fast mode, 1 Mbit/s Fast mode plus, 3.4 Mbit/s High Speed mode, and 5 Mbit/s Ultra Fast-mode). These speeds are more widely used on embedded systems than on PCs. 
 
 # Address
-- 7-bit addressing
-  <img src="https://raw.githubusercontent.com/shannon112/Notes/main/I2C/7-bit_addressing.png" width=400>
-- 10-bit addressing
-  <img src="https://raw.githubusercontent.com/shannon112/Notes/main/I2C/10-bit_addressing.png" width=400>
-- Reserved addresses in 7-bit address space (保留)
+- 7-bit addressing  
+  <img src="https://raw.githubusercontent.com/shannon112/Notes/main/I2C/7-bit_addressing.png" width=600>
+- 10-bit addressing  
+  <img src="https://raw.githubusercontent.com/shannon112/Notes/main/I2C/10-bit_addressing.png" width=600>
+- Reserved addresses in 7-bit address space (保留)  
   <img src="https://raw.githubusercontent.com/shannon112/Notes/main/I2C/Reserved_addresses.png" width=400>
-- Non-reserved addresses in 7-bit address space (常見)
+- Non-reserved addresses in 7-bit address space (常見)  
   <img src="https://raw.githubusercontent.com/shannon112/Notes/main/I2C/Non-reserved_addresses.png" width=400>
 
 # Data Transmission
@@ -111,6 +111,7 @@ void loop() {
 ```
 - GY-80 consists 5 different sensors and the GY-521 consists 3 different sensors. But there are only 5 device address.
 - The device address and internal registers address can be found in datasheet.
+- Or scan the device address: https://playground.arduino.cc/Main/I2cScanner/
 - The device address included the 8th bit (read mode in this case)
 
 # Open Drain v.s. Push Pull

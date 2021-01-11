@@ -6,7 +6,7 @@ The **Serial Peripheral Interface** (SPI，發音類似spy) is a synchronous ser
 - **Master-Slave-Based**, can have only one master and can have one or multiple slaves.
 - **Full duplex communication**, send and receive simultaneously, both master and slave can transmit data at the same time.
 - **Synchronous communication**, the data from the master or the slave is synchronized on the rising or falling clock edge.
-- **High speed**, SPI > I2C > UART, SPI devices support much higher clock frequencies compared to I2C interfaces, so it is suitable for SDcard module.  
+- **High speed**, SPI > I2C > UART, SPI devices support much higher clock frequencies compared to I2C interfaces, typically up to a few MHz (so that is a few Mbps), so it is suitable for SDcard module.  
 - **Short distance**, around 20cm, UART > I2C > SPI.
 
 # Interface:
