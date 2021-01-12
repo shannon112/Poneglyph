@@ -1,5 +1,5 @@
 # Intro:
-The **Inter-Integrated Circuit** (I2C, pronounced I-squared-C) is a synchronous, multi-master, multi-slave, packet switched, single-ended, serial communication bus invented in 1982 by Philips Semiconductor (now NXP Semiconductors). It is widely used for attaching lower-speed peripheral ICs to processors and microcontrollers in short-distance, intra-board communication. Alternatively, I2C is spelled I2C (pronounced I-two-C) or IIC (pronounced I-I-C). Typical applications include GY series IMU and RTC clock module.[1]
+The **Universal Asynchronous Receiver-Transmitter** (UART, pronounced U-ART) is an asynchronous serial communication in which the data format and transmission speeds are configurable. It sends data bits one by one, from the least significant to the most significant, framed by start and stop bits so that precise timing is handled by the communication channel. It was one of the earliest computer communication devices, used to attach teletypewriters for an operator console. It was also an early hardware system for the Internet. The electric signaling levels are handled by a driver circuit external to the UART. Two common signal levels are RS-232, a 12-volt system, and RS-485, a 5-volt system. Specialised UARTs are used for automobiles, smart cards and SIMs. Early teletypewriters used current loops. A UART is usually an individual (or part of an) integrated circuit (IC) used for serial communications over a computer or peripheral device serial port. One or more UART peripherals are commonly integrated in microcontroller chips.[1]
 applications: serial (COM) port, RS-232, modems
 
 # Character:
@@ -22,13 +22,19 @@ applications: serial (COM) port, RS-232, modems
 
 # Frame
 - Start bit: from high to low
-- Stop bit: stay or return to high
+- Stop bit: stay or return to high. can have 1 or 2 stop bit
 - Data bits: 5~9bits (usually 7 or 8 bits) and LSB first
 - Parity bit: used for error detection. Even parity or odd
 high voltage (marked), low voltage (space)
 idle is held high
 
 # Data Transmission
+Setting: 
+speed baud rate, 4800, 9600, 
+parity, None, even, odd, mark, space
+data bits, 5 6 7 8
+stopbits, 1, 2
+e.g. 9600 8N1 for speed=9600, databits=8, parity=none, stopbits=1
 
 # Pros and cons 
 - Advantages  
@@ -41,8 +47,32 @@ Original experiment from: https://howtomechatronics.com/tutorials/arduino/how-i2
 <img src="https://raw.githubusercontent.com/shannon112/Notes/main/I2C/GY_address.png" height=250> <img src="https://raw.githubusercontent.com/shannon112/Notes/main/I2C/Connection.png" height=250>
 
 ```c
+int value = 0;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(13, OUTPUT);
+}
+
+void loop() {
+  if (Serial.available() > 0) {
+    value = Serial.read();
+    delay(5);
+
+    if (value == '1') {
+      digitalWrite(led, HIGH);
+      Serial.println("LED is ON");
+    }
+
+    if (value == '0') {
+      digitalWrite(led, LOW);
+      Serial.println("LED is OFF");
+    }
+  }
+}
 ```
-- GY-80 consists 5 different sensors and the GY-521 consists 3 different sensors. But there are only 5 device address.
+- Arduino usb port to PC is a uart serial (COM) port, shown as /dev/cu.usbserial-1410
+- Open the arduino serial monitor on PC and choose the correct frame format, then can send data through uart to arduino
 
 # LSB first v.s. MSB first
 Data: 1 0 1 0 0 1 1  
@@ -54,3 +84,4 @@ MSB (first) order: 1 0 1 0 0 1 1
 # Reference
 [1] https://en.wikipedia.org/wiki/Universal_asynchronous_receiver-transmitter  
 [2] https://www.youtube.com/watch?v=sTHckUyxwp8  
+[3] https://www.youtube.com/watch?v=LubYc87S9tQ
