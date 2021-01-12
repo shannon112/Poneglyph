@@ -20,7 +20,13 @@ applications: serial (COM) port, RS-232, modems
 57600
 115200
 
-# Address
+# Frame
+- Start bit: from high to low
+- Stop bit: stay or return to high
+- Data bits: 5~9bits (usually 7 or 8 bits) and LSB first
+- Parity bit: used for error detection. Even parity or odd
+high voltage (marked), low voltage (space)
+idle is held high
 
 # Data Transmission
 
@@ -35,60 +41,16 @@ Original experiment from: https://howtomechatronics.com/tutorials/arduino/how-i2
 <img src="https://raw.githubusercontent.com/shannon112/Notes/main/I2C/GY_address.png" height=250> <img src="https://raw.githubusercontent.com/shannon112/Notes/main/I2C/Connection.png" height=250>
 
 ```c
-#include <Wire.h>
-
-int ADXLAddress = 0x53; // Device address 
-#define X_Axis_Register_DATAX0 0x32 // Internal register addresses
-#define X_Axis_Register_DATAX1 0x33 // Internal registers addresses
-#define Power_Register 0x2D // Power Control Register
-
-int X0,X1,X_out;
-void setup() {
-  // Initiate
-  Wire.begin(); 
-  Serial.begin(9600);
-  delay(100);
-  
-  // Enable measurement
-  Wire.beginTransmission(ADXLAddress);
-  Wire.write(Power_Register);
-  
-  // Bit D3 High for measuring enable (0000 1000)
-  Wire.write(8);  
-  Wire.endTransmission();
-}
-
-void loop() {
-  // Begin transmission to the Sensor
-  Wire.beginTransmission(ADXLAddress);  
-  //Ask the particular registers for data
-  Wire.write(X_Axis_Register_DATAX0);
-  Wire.write(X_Axis_Register_DATAX1);
-  // Ends the transmission and transmits the data from the two registers
-  Wire.endTransmission(); 
-  // Request the transmitted two bytes from the two registers
-  Wire.requestFrom(ADXLAddress,2); 
-  
-  // Reads the data from the register
-  if(Wire.available()<=2) { 
-    X0 = Wire.read(); 
-    X1 = Wire.read();   
-  }
-  
-  // Print the raw data
-  Serial.print("X0= ");
-  Serial.print(X0);
-  Serial.print(", X1= ");
-  Serial.println(X1);
-}
 ```
 - GY-80 consists 5 different sensors and the GY-521 consists 3 different sensors. But there are only 5 device address.
-- The device address and internal registers address can be found in datasheet.
-- Or scan the device address: https://playground.arduino.cc/Main/I2cScanner/
-- The device address included the 8th bit (read mode in this case)
 
+# LSB first v.s. MSB first
+Data: 1 0 1 0 0 1 1  
+     MSB         LSB  
+LSB (first) order: 1 1 0 0 1 0 1  
+MSB (first) order: 1 0 1 0 0 1 1  
+<img src="https://raw.githubusercontent.com/shannon112/Notes/main/UART/LSB_first.png" width=400>
 
 # Reference
-[1] https://en.wikipedia.org/wiki/I%C2%B2C  
-[2] https://www.youtube.com/watch?v=6IAkYpmA1DQ  
-[3] https://circuitdigest.com/forums/embedded/difference-between-open-drain-and-push-pull
+[1] https://en.wikipedia.org/wiki/Universal_asynchronous_receiver-transmitter  
+[2] https://www.youtube.com/watch?v=sTHckUyxwp8  
