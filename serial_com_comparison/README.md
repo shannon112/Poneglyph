@@ -28,9 +28,8 @@ Synchronous serial communication: In this type of communication both transmitter
 | Speed      |  9.6/19.2/38.4/57.6/115.2 kbps | 100/400 kbps  | a few mbps |
 | Distance   | around 15m     | around 1m |  around 0.2m     |
 | Power      | medium     | medium     | lower    |
-| Acknowledge Pin? | Yes     | No     | No     |
-| Error Detection? | Parity Bit   | img     | img     |
-| Flow Control?    | img     | img     | img     |
+| Error Detection | parity bit   | no     | no     |
+| Flow Control (Acknowledgement Mechanism)    | no     | ACK bit     | no     |
 | Data Start From | LSB First   | MSB First  | LSB or MSB First   |
 | Data Transmission | Frame (start bit, data bits, parity bit, stop bit)   | Address (start bit, device address 8 bits, ack, internal register address 8 bits, ack, data 8 bits, ack, stop bit)  | Slave Select/Chip Select. Active low, it is pulled high to disconnect the slave from the SPI bus. |
 
