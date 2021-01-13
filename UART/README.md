@@ -12,7 +12,7 @@ The **Universal Asynchronous Receiver-Transmitter** (UART, pronounced U-ART) is 
 The main purpose of a transmitter and receiver line for each device is to transmit and receive serial data intended for serial communication.  
 - **TX**：Transmitter 發送端. 
 - **RX**：Receiver 接收端.
-<img src="https://raw.githubusercontent.com/shannon112/Notes/main/UART/uart_interface.png" width=400>
+<img src="https://raw.githubusercontent.com/shannon112/Notes/main/UART/uart_interface.png" width=350>
 
 # Speed (baud rate)
 9600
