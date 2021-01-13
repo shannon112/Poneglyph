@@ -20,18 +20,19 @@ Synchronous serial communication: In this type of communication both transmitter
 |          |   UART    |   I2C   |    SPI   |
 | -------- | -------- | -------- | -------- |
 | Full Name  | Universal Asynchronous Receiver Transmitter  | Inter-Integrated Circuit  | Serial Peripheral Interface |
-| Connection | img     | img     | img     |
+| Connection | <img src="https://raw.githubusercontent.com/shannon112/Notes/main/serial_com_comparison/UART.png" height=100>  | <img src="https://raw.githubusercontent.com/shannon112/Notes/main/serial_com_comparison/I2C.png" height=100>   | <img src="https://raw.githubusercontent.com/shannon112/Notes/main/serial_com_comparison/SPI.png" height=100>     |
 | SYN        | Asynchronous     | Synchronous     | Synchronous     |
 | Wires      | 2 (RX, TX)     | 2 (SCL, SDA)   | 3 (SCLK, MISO, MOSI) + N (SS)   |
 | Devices    | 1 to 1     | N Masters, N Slaves     | 1 Master, N Slaves    |
 | Receiver and Transmitte | Simplex or Half-Duplex or Full-Duplex    | Half-Duplex     | Full-Duplex    |
-| Speed      | img     | img     | img     |
-| Distance   | img     | img     | img     |
-| Power      | img     | img     | img     |
-| Acknowledge Pin | img     | img     | img     |
-| Error Detection | Parity Bit   | img     | img     |
-| Flow Control    | img     | img     | img     |
-| Data Start From | LSB First   | img     | img     |
+| Speed      |  9.6/19.2/38.4/57.6/115.2 kbps | 100/400 kbps  | a few mbps |
+| Distance   | around 15m     | around 1m |  around 0.2m     |
+| Power      | medium     | medium     | lower    |
+| Acknowledge Pin? | Yes     | No     | No     |
+| Error Detection? | Parity Bit   | img     | img     |
+| Flow Control?    | img     | img     | img     |
+| Data Start From | LSB First   | MSB First  | LSB or MSB First   |
+| Data Transmission | Frame (start bit, data bits, parity bit, stop bit)   | Address (start bit, device address 8 bits, ack, internal register address 8 bits, ack, data 8 bits, ack, stop bit)  | Slave Select/Chip Select. Active low, it is pulled high to disconnect the slave from the SPI bus. |
 
 # Reference
 [1] https://www.youtube.com/watch?v=IyGwvGzrqp8  
