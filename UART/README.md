@@ -75,8 +75,11 @@ void loop() {
 - Open the arduino serial monitor on PC and choose the correct frame format, then can send data through uart to arduino
 
 # LSB first v.s. MSB first
-Data: 1 0 1 0 0 1 1  
-     MSB         LSB  
+- Most significant bit (MSB) first means that the most significant bit will arrive first.
+- Least significant bit (LSB) first means that the least significant bit will arrive first.
+
+Data: 1 0 1 0 0 1 1  (ASCII'S',0x53)  
+　　　MSB　　　　　　LSB  
 LSB (first) order: 1 1 0 0 1 0 1  
 MSB (first) order: 1 0 1 0 0 1 1  
 <img src="https://raw.githubusercontent.com/shannon112/Notes/main/UART/LSB_first.png" width=400>
