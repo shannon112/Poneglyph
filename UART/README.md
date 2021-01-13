@@ -14,26 +14,26 @@ The main purpose of a transmitter and receiver line for each device is to transm
 - **RX**：Receiver 接收端.
 <img src="https://raw.githubusercontent.com/shannon112/Notes/main/UART/uart_interface.png" width=350>
 
-# Speed (baud rate)
-9600
-19200
-57600
-115200
+# Data Framing:
+The idle, no data state is high-voltage, or powered. High voltage is called "marked". Low voltage is called "space".  
+This is a historic legacy from telegraphy, in which the line is held high to show that the line and transmitter are not damaged.  
+- Start bit: changing voltage from high to low, signaling the receiver that a new data is coming
+- Data bits: 5~9 bits (usually 7 or 8 bits). In most applications the least significant data bit (LSB) is transmitted first 
+- Parity bit: used for error detection. If the parity bit is a 0 (even parity), the 1 or logic-high bit in the data frame should total to an even number. If the parity bit is a 1 (odd parity), the 1 bit or logic highs in the data frame should total to an odd number.
+- Stop bit: stay or return to high. Can have 1 or 2 stop bit, signaling the receiver that the data is complete.
 
-# Frame
-- Start bit: from high to low
-- Stop bit: stay or return to high. can have 1 or 2 stop bit
-- Data bits: 5~9bits (usually 7 or 8 bits) and LSB first
-- Parity bit: used for error detection. Even parity or odd
-high voltage (marked), low voltage (space)
-idle is held high
+Since the start bit is logic low (0) and the stop bit is logic high (1) there are always at least two guaranteed signal changes between characters.  
+If the line is held in the logic low condition for longer than a character time, this is a break condition that can be detected by the UART.   
+<img src="https://raw.githubusercontent.com/shannon112/Notes/main/UART/data_frame.png" width=350>
 
 # Data Transmission
-Setting: 
-speed baud rate, 4800, 9600, 
-parity, None, even, odd, mark, space
-data bits, 5 6 7 8
-stopbits, 1, 2
+The UART interface does not use a clock signal to synchronize the transmitter and receiver devices; it transmits data asynchronously. Instead of a clock signal, the transmitter generates a bitstream based on its clock signal while the receiver is using its internal clock signal to sample the incoming data. The point of synchronization is managed by having the same baud rate on both devices. Failure to do so may affect the timing of sending and receiving data that can cause discrepancies during data handling. The allowable difference of baud rate is up to 10% before the timing of bits gets too far off.  
+Preconfigured setting:  
+- Speed/Baud Rate: 4800, 9600, 19200, 57600, 115200, etc.
+- Parity: none, even, odd.
+- Data Bits: 5, 6, 7, 8, 9.
+- Stop Bits, 1, 2.
+
 e.g. 9600 8N1 for speed=9600, databits=8, parity=none, stopbits=1
 
 # Pros and Cons 
