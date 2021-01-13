@@ -22,12 +22,11 @@ This is a historic legacy from telegraphy, in which the line is held high to sho
 - Parity bit: used for error detection. If the parity bit is a 0 (even parity), the 1 or logic-high bit in the data frame should total to an even number. If the parity bit is a 1 (odd parity), the 1 bit or logic highs in the data frame should total to an odd number.
 - Stop bit: stay or return to high. Can have 1 or 2 stop bit, signaling the receiver that the data is complete.
 
-Since the start bit is logic low (0) and the stop bit is logic high (1) there are always at least two guaranteed signal changes between characters.  
-If the line is held in the logic low condition for longer than a character time, this is a break condition that can be detected by the UART.   
-<img src="https://raw.githubusercontent.com/shannon112/Notes/main/UART/data_frame.png" width=350>
+Since the start bit is logic low (0) and the stop bit is logic high (1) there are always at least two guaranteed signal changes between characters. If the line is held in the logic low condition for longer than a character time, this is a break condition that can be detected by the UART.   
+<img src="https://raw.githubusercontent.com/shannon112/Notes/main/UART/data_frame.png" width=600>
 
 # Data Transmission
-The UART interface does not use a clock signal to synchronize the transmitter and receiver devices; it transmits data asynchronously. Instead of a clock signal, the transmitter generates a bitstream based on its clock signal while the receiver is using its internal clock signal to sample the incoming data. The point of synchronization is managed by having the same baud rate on both devices. Failure to do so may affect the timing of sending and receiving data that can cause discrepancies during data handling. The allowable difference of baud rate is up to 10% before the timing of bits gets too far off.  
+The UART interface does not use a clock signal to synchronize the transmitter and receiver devices; it transmits data asynchronously. Instead of a clock signal, the transmitter generates a bitstream based on its clock signal while the receiver is using its internal clock signal to sample the incoming data. The point of synchronization is managed by having the same baud rate on both devices. Failure to do so may affect the timing of sending and receiving data that can cause discrepancies during data handling. The allowable difference of baud rate is up to 10% before the timing of bits gets too far off. [4]  
 Preconfigured setting:  
 - Speed/Baud Rate: 4800, 9600, 19200, 57600, 115200, etc.
 - Parity: none, even, odd.
@@ -37,10 +36,15 @@ Preconfigured setting:
 e.g. 9600 8N1 for speed=9600, databits=8, parity=none, stopbits=1
 
 # Pros and Cons 
-- Advantages  
+- Advantages 
   - low cost, and easy construct for low speed, low throughput application
+  - only two wires are needed
+  - provide error detection mechanism (parity bit)
 - Disadvantages [1]  
-
+  - the size of a frame is limited to a maximum of 9 bits
+  - does not support multiple device communication
+  - low speed is the bottleneck for application which required higher data transmission rate
+  
 # Demo: UART Communication with Computer
 Original experiment from: https://github.com/binaryupdates/Arduino-Serial-Communication-using-UART [3]
 
@@ -87,5 +91,5 @@ MSB (first) order: 1 0 1 0 0 1 1
 # Reference
 [1] https://en.wikipedia.org/wiki/Universal_asynchronous_receiver-transmitter  
 [2] https://www.youtube.com/watch?v=sTHckUyxwp8  
-[3] https://www.youtube.com/watch?v=LubYc87S9tQ
+[3] https://www.youtube.com/watch?v=LubYc87S9tQ  
 [4] https://www.analog.com/en/analog-dialogue/articles/uart-a-hardware-communication-protocol.html
