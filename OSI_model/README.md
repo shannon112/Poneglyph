@@ -18,16 +18,49 @@ The model partitions the flow of data in a communication system into seven abstr
 <img src="https://raw.githubusercontent.com/shannon112/Notes/main/OSI_model/OSI_data_pyramid.png" width=400>
 
 # Common Protocol in Robotics Application: Overview
-|           |  I2C | SPI |  RS-232 RS-485 (UART based)|  CAN          | Ethernet |  CANOpen | EtherCAT | Modbus |
-| --------  | ---- | --- | -------------------------- | ------------- | -------- | -------- | -------- | ------ |
-| 1.Physical|  I2C |  SPI  |   RS-232 RS-485          |  ISO 11898-2  | IEEE 802.3  |  
-| 2.Data-Link| I2C |  SPI  |    UART                  |  ISO 11898-1  | IEEE 802.3  |
+|           |  I2C | SPI |  RS-232 RS-485 (UART based)|  CAN          | Ethernet    |  CANOpen | EtherCAT | Modbus |
+| --------  | ---- | --- | -------------------------- | ------------- | ----------  | -------- | -------- | ------ |
+| 1.Physical|  I2C |  SPI  |   RS-232 RS-485          |  ISO 11898-2  | IEEE 802.3  |  CAN     | Ethernet |
+| 2.Data-Link| I2C |  SPI  |    UART                  |  ISO 11898-1  | IEEE 802.3  |  CAN     | Ethernet MAC, Mailbox/Buffer Handling, Process Data Mapping, Extreme Fast Auto-Forwarder |
 | 3.Network|
 | 4.Transport|
 | 5.Session|
 | 6.Presentation|
 | 7.Application|
 
+# RS-232
+https://www.youtube.com/watch?v=eo9dbnrpspM
+serial communication, no standard but 9pin DB9 cable is widely used , positive voltage b0, negative voltage b1, DTE com to DCE, low speed, short distance 50feet, inexpensive, widely used to PLC, HMI, motor driver, 1 to 1 connected, refer to the ground noisy
+
+# RS-485
+https://www.youtube.com/watch?v=3wgKcUDlHuM
+serial communication, younger and faster than RS-232, multiple device connected(32), 4000feet, no standard but 9pin DB9 cable is widely used, cable with shield to prevent noise
+
+# Ethernet
+https://www.youtube.com/watch?v=HLziLmaYsO0 
+1983 IEEE 802.3 ethernet defined physical layer and data link layer, connecting Local Area Network(LAN) devices, coaxial cable->twisted pair cable(CAT5/5e CAT6 CAT6a CAT7)with RJ-45connector->Fiber optic cable(glass or plastic)with SFP and SC connector, physical layer: cabling and devices(bridge and gateway), full-duplex or half-dulplex, data link layer: media access control(MAC) logical link control(LLC), MAC each network interface card (NIC) have one, CSMA/CD to data transmission, star topology and bus topology connection, then connect several LAN by Internet to a wide area network (WAN)
+
+# EtherCAT
+https://www.youtube.com/watch?v=tYAl2jkaB8Q
+ethercat is a ethernet based communication protocol, ethernet for control automation technology(CAT), with several mechanism benefit to automation application
+
+# Modbus
+https://www.youtube.com/watch?v=txi2p5_OjKU
+
+# CAN
+https://www.youtube.com/watch?v=FqLDpHsxvf8
+The Controller Area Network system, electronic control systems (ECS) are connected by CAN bus. In automative system ECUs can be engine control unit, airbags,  audio system, ...etc(more than 70 ECUs in a morden car). 1.Low cost 2.Centralized 3.Robust 4.Efficient 5.Flexible, Bosch invent it. CAN msg format 8 key parts. Related protocol: SAE J1939, OBD-II, CANopen. It is a data link layer(ISO 11898-1) and physical layer(ISO 11898-2).
+
+# CANOpen
+https://www.youtube.com/watch?v=DlbkWryzJqg
+CANOpen is a CAN based communication protocol, but 6 new important concept. https://www.csselectronics.com/screen/page/canopen-tutorial-simple-intro
+
+# I2C, SPI, UART
+Read the details in:
+- Comparison: https://shannon112.blogspot.com/2021/01/embedded-system-serial-communication.html
+- SPI: https://shannon112.blogspot.com/2021/01/embedded-system-serial-peripheral.html
+- I2C: https://shannon112.blogspot.com/2021/01/embedded-system-inter-integrated.html
+- UART: https://shannon112.blogspot.com/2021/01/embedded-system-universal-asynchronous.html
 
 # Reference
 [1] https://en.wikipedia.org/wiki/OSI_model  
