@@ -121,6 +121,7 @@ The Controller Area Network system, electronic control systems (ECS) are connect
 # CANOpen
 https://www.youtube.com/watch?v=DlbkWryzJqg
 CANOpen is a CAN based communication protocol, but 6 new important concept. https://www.csselectronics.com/screen/page/canopen-tutorial-simple-intro
+https://www.canopensolutions.com/english/about_canopen/CANopen-and-the-OSI-reference-model.shtml#
 
 # I2C, SPI, UART
 Read the details in:
