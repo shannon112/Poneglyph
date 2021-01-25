@@ -18,10 +18,10 @@ The model partitions the flow of data in a communication system into seven abstr
 <img src="https://raw.githubusercontent.com/shannon112/Notes/main/OSI_model/OSI_data_pyramid.png" width=400>
 
 # Common Protocol in Robotics Application: Overview
-|           |  I2C | SPI |  RS-232 RS-485 (UART based)|  CAN          | Ethernet    |  CANOpen | EtherCAT | Modbus |
-| --------  | ---- | --- | -------------------------- | ------------- | ----------  | -------- | -------- | ------ |
-| 1.Physical|  I2C |  SPI  |   RS-232 RS-485          |  ISO 11898-2  | IEEE 802.3  |  CAN     | Ethernet |
-| 2.Data-Link| I2C |  SPI  |    UART                  |  ISO 11898-1  | IEEE 802.3  |  CAN     | Ethernet MAC, Mailbox/Buffer Handling, Process Data Mapping, Extreme Fast Auto-Forwarder |
+|           |  I2C | SPI |  RS-232(UART based) | RS-485 (UART based) |  CAN          | Ethernet    |  CANOpen | EtherCAT | 
+| --------  | ---- | --- | ------------------- | ------------------- | ------------- | ----------  | -------- | -------- | 
+| 1.Physical|  I2C |  SPI  | RS-232(EIA/TIA-232-F) | RS-485(EIA/TIA-485-A)  |  ISO 11898-2  | IEEE 802.3  |  CAN     | Ethernet |
+| 2.Data-Link| I2C |  SPI  |    UART               | UART      |  ISO 11898-1  | IEEE 802.3  |  CAN     | Ethernet MAC, Mailbox/Buffer Handling, Process Data Mapping, Extreme Fast Auto-Forwarder |
 | 3.Network|
 | 4.Transport|
 | 5.Session|
@@ -76,9 +76,6 @@ https://www.youtube.com/watch?v=HLziLmaYsO0
 # EtherCAT
 https://www.youtube.com/watch?v=tYAl2jkaB8Q
 ethercat is a ethernet based communication protocol, ethernet for control automation technology(CAT), with several mechanism benefit to automation application
-
-# Modbus
-https://www.youtube.com/watch?v=txi2p5_OjKU
 
 # CAN
 https://www.youtube.com/watch?v=FqLDpHsxvf8
