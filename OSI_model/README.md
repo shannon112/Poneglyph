@@ -18,16 +18,22 @@ The model partitions the flow of data in a communication system into seven abstr
 <img src="https://raw.githubusercontent.com/shannon112/Notes/main/OSI_model/OSI_data_pyramid.png" width=400>
 
 # Common Protocol in Robotics Application: Overview
-|           |  I2C | SPI |  RS-232(UART based) | RS-485 (UART based) |  CAN          | Ethernet    |  CANOpen | EtherCAT | 
-| --------  | ---- | --- | ------------------- | ------------------- | ------------- | ----------  | -------- | -------- | 
-| 1.Physical|  I2C |  SPI  | RS-232(EIA/TIA-232-F) | RS-485(EIA/TIA-485-A)  |  ISO 11898-2  | IEEE 802.3  |  CAN     | Ethernet |
-| 2.Data-Link| I2C |  SPI  |    UART               | UART      |  ISO 11898-1  | IEEE 802.3  |  CAN     | Ethernet MAC, Mailbox/Buffer Handling, Process Data Mapping, Extreme Fast Auto-Forwarder |
-| 3.Network|
-| 4.Transport|
+|           |  I2C | SPI |  RS-232(UART based) | RS-485 (UART based) |  CAN          | Ethernet  |  USB  |  CANOpen | EtherCAT | 
+| --------  | ---- | --- | ------------------- | ------------------- | ------------- | --------  | ------| -------- | -------- | 
+| 1.Physical|  I2C |  SPI  | RS-232(EIA/TIA-232-F) | RS-485(EIA/TIA-485-A)|  ISO 11898-2  | IEEE 802.3 | USB 1.1/2.0/3.0/3.1 | CAN | Ethernet |
+| 2.Data-Link| I2C |  SPI  |    UART               | UART                 |  ISO 11898-1  | IEEE 802.3  | USB 1.1/2.0/3.0/3.1 | CAN | Ethernet MAC, Mailbox/Buffer Handling, Process Data Mapping, Extreme Fast Auto-Forwarder |
+| 3.Network|   | | | | | | USB 1.1/2.0/3.0/3.1 |
+| 4.Transport| | | | | | | USB 1.1/2.0/3.0/3.1 |
 | 5.Session|
 | 6.Presentation|
 | 7.Application|
-| * Speed | 100/400 kbps |	a few mbps | 9.6/19.2/38.4/57.6/115.2 kbps |  a few mbps |
+| * Speed | 100/400 kbps |	a few mbps | 9.6/19.2/38.4/57.6/115.2 kbps |  a few mbps | | | 1.5(12)/480/5000/10000 Mbps |
+| * Topology | Bus | Star | 1-to-1 | Daisy Chain with terminating resistors |  Daisy Chain with terminating resistors |  Star or Daisy Chain with terminating resistors | Star | - | - |
+| * Max # devices |
+| * Max length    |
+| * Transfer mode |
+| *  Multi-Master Support |
+
 
 # RS-232
 Overview: https://www.youtube.com/watch?v=eo9dbnrpspM
@@ -110,3 +116,9 @@ Read the details in:
 [6] https://en.wikipedia.org/wiki/RS-485  
 [7] https://en.wikipedia.org/wiki/Shielded_cable  
 [8] https://en.wikipedia.org/wiki/Balanced_line  
+[9] https://en.wikipedia.org/wiki/USB
+[10] USB3.1: https://www.synopsys.com/designware-ip/technical-bulletin/protocol-layer-changes.html
+
+[] Comparison1: http://ucpros.com/work%20samples/Microcontroller%20Communication%20Interfaces%203.htm
+[] Comparison2: https://blog.servo2go.com/2013/09/23/comparing-canopen-and-ethercat-fieldbus-networks/
+[] Comparison3: https://blog.csdn.net/djl806943371/article/details/89331048
