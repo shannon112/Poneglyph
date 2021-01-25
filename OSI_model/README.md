@@ -85,8 +85,30 @@ Overview: https://www.youtube.com/watch?v=3wgKcUDlHuM
   - Connector types are not specified. Refer to RS-232, using DB9 connector. Cable is using balanced interconnecting cable (shielded cable) to prevent noise.
 
 # Ethernet
-https://www.youtube.com/watch?v=HLziLmaYsO0 
-1983 IEEE 802.3 ethernet defined physical layer and data link layer, connecting Local Area Network(LAN) devices, coaxial cable->twisted pair cable(CAT5/5e CAT6 CAT6a CAT7)with RJ-45connector->Fiber optic cable(glass or plastic)with SFP and SC connector, physical layer: cabling and devices(bridge and gateway), full-duplex or half-dulplex, data link layer: media access control(MAC) logical link control(LLC), MAC each network interface card (NIC) have one, CSMA/CD to data transmission, star topology and bus topology connection, then connect several LAN by Internet to a wide area network (WAN)
+Overview: https://www.youtube.com/watch?v=HLziLmaYsO0 
+- Ethernet is a family of wired computer networking technologies commonly used in **local area networks (LAN)**, metropolitan area networks (MAN) and wide area networks (WAN). 
+- It was commercially introduced in 1980 and first standardized in 1983 as **IEEE 802.3, covering OSI physical layer and data-link layer**.
+- Ethernet has since been refined to support **higher bit rates, a greater number of nodes, and longer link distances, but retains much backward compatibility**. Over time, Ethernet has largely replaced competing wired LAN technologies such as Token Ring, FDDI and ARCNET.
+- Physical layer: About the cabling, signaling and devices. 
+  - The original Ethernet uses **coaxial cable (10BASE5)** as a shared medium, using a thick and stiff coaxial cable up to **500 meters** (1,600 ft) in length. Up to 100 stations can be connected to the cable using vampire taps and share a single collision domain with **10 Mbit/s** of bandwidth shared among them. The system is difficult to install and maintain. https://en.wikipedia.org/wiki/10BASE5
+  - The newer Ethernet variants use **twisted pair (10BASE-T, 100BASE-TX, and 1000BASE-T)** with **8P8C modular connectors**. Correspondingly, Cat3 10Mbit/s and 100meters, Cat5e 100Mbit/s and 15meters, Cat5 1000Mbit/s and 100meters. https://en.wikipedia.org/wiki/Ethernet_over_twisted_pair
+  - 8P8C commonly referred to as RJ45 in the context of Ethernet and category 5 cables, RJ-45 originally refers to a specific wiring configuration of an 8P8C connector. A telephone-system-standard RJ45 plug has a key which excludes insertion in an un-keyed 8P8C socket. https://en.wikipedia.org/wiki/Modular_connector
+  - The newest **Fiber optic** (glass or plastic) with **SFP and SC connector**, are also very popular in larger networks, offering high performance, better electrical isolation and longer distance, run at 400Gbit/s and longer than 1000 meters. https://en.wikipedia.org/wiki/Optical_fiber
+  - SC(Subscriber/Square/Standard Connector) and SFP(Small Factor/Form Pluggable): https://en.wikipedia.org/wiki/Optical_fiber_connector and https://en.wikipedia.org/wiki/Small_form-factor_pluggable_transceiver
+  - Ethernet devices are consisting of any device which have a Network Interface Card (NIC), USB based or PCI based. https://en.wikipedia.org/wiki/Network_interface_controller
+  - Repeaters and hubs. For signal degradation and timing reasons, coaxial Ethernet segments have a restricted size. Somewhat larger networks can be built by using an Ethernet repeater and hub. https://en.wikipedia.org/wiki/Ethernet_hub 
+  - Switch and Router act as a director of the network. Connecting multiple devices and enabling communication between all the devices. https://en.wikipedia.org/wiki/Network_switch and https://en.wikipedia.org/wiki/Router_(computing)
+  - Gateway and Bridge are used to connect multiple Ethernet network together, allow communication across them. Gateway connects two dissimilar network together. Bridge connects two similar network together. https://en.wikipedia.org/wiki/Gateway_(telecommunications) and https://en.wikipedia.org/wiki/Bridging_(networking)
+
+- full-duplex or half-dulplex,
+
+data link layer: media access control(MAC) logical link control(LLC), MAC each network interface card (NIC) have one, CSMA/CD to data transmission, star topology and bus topology connection, then connect several LAN by Internet to a wide area network (WAN)
+
+- Data-link layer: Systems communicating over Ethernet divide a stream of data into shorter pieces called frames. Each frame contains **source** and **destination addresses**, and **error-checking** data so that damaged frames can be detected and discarded; most often, higher-layer protocols trigger retransmission of lost frames. The 48-bit MAC address was adopted by other IEEE 802 networking standards, including IEEE 802.11 (Wi-Fi), as well as by FDDI. 
+ 
+In IEEE 802.3, a datagram is called a packet or frame. Packet is used to describe the overall transmission unit and includes the preamble, start frame delimiter (SFD) and carrier extension (if present).[l] The frame begins after the start frame delimiter with a frame header featuring source and destination MAC addresses and the EtherType field giving either the protocol type for the payload protocol or the length of the payload. The middle section of the frame consists of payload data including any headers for other protocols (for example, Internet Protocol) carried in the frame. The frame ends with a 32-bit cyclic redundancy check, which is used to detect corruption of data in transit.[53]:sections 3.1.1 and 3.2 Notably, Ethernet packets have no time-to-live field, leading to possible problems in the presence of a switching loop. 
+
+- Ethernet is widely used in homes and industry, and interworks well with wireless Wi-Fi technologies. The Internet Protocol is commonly carried over Ethernet and so it is considered one of the key technologies that make up the Internet. 
 
 # EtherCAT
 https://www.youtube.com/watch?v=tYAl2jkaB8Q
@@ -116,9 +138,11 @@ Read the details in:
 [6] https://en.wikipedia.org/wiki/RS-485  
 [7] https://en.wikipedia.org/wiki/Shielded_cable  
 [8] https://en.wikipedia.org/wiki/Balanced_line  
-[9] https://en.wikipedia.org/wiki/USB
-[10] USB3.1: https://www.synopsys.com/designware-ip/technical-bulletin/protocol-layer-changes.html
+[9] https://en.wikipedia.org/wiki/Ethernet  
+[10] https://www.geeksforgeeks.org/network-devices-hub-repeater-bridge-switch-router-gateways/  
+[11] https://en.wikipedia.org/wiki/USB  
+[12] USB3.1: https://www.synopsys.com/designware-ip/technical-bulletin/protocol-layer-changes.html  
 
-[] Comparison1: http://ucpros.com/work%20samples/Microcontroller%20Communication%20Interfaces%203.htm
-[] Comparison2: https://blog.servo2go.com/2013/09/23/comparing-canopen-and-ethercat-fieldbus-networks/
-[] Comparison3: https://blog.csdn.net/djl806943371/article/details/89331048
+[] Comparison1: http://ucpros.com/work%20samples/Microcontroller%20Communication%20Interfaces%203.htm  
+[] Comparison2: https://blog.servo2go.com/2013/09/23/comparing-canopen-and-ethercat-fieldbus-networks/  
+[] Comparison3: https://blog.csdn.net/djl806943371/article/details/89331048  
