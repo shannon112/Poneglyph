@@ -68,7 +68,7 @@ Overview: https://www.youtube.com/watch?v=eo9dbnrpspM
 # RS-485
 Overview: https://www.youtube.com/watch?v=3wgKcUDlHuM
 - RS-485, also known as TIA-485(-A) or EIA-485, is a standard defining the electrical characteristics of drivers and receivers for use in **serial communications systems**. 
-- **Electrical signaling is balanced, and multipoint systems are supported**(multidrop communications).**Inexpensive, faster, longer distance, less noise**. Such as a younger brother of RS-232.
+- **Electrical signaling is balanced, and multipoint systems are supported**(multidrop communications, up to 32 devices).**Inexpensive, faster, longer distance, less noise**. Such as a younger brother of RS-232.
 - Digital communications networks implementing the standard can be used effectively over long distances and in electrically noisy environments. Multiple receivers may be connected to such a network in a linear, multidrop bus. These characteristics make RS-485 useful in industrial control systems and similar applications such as Variable Frequency Drives(VFD or motor drives), PLC, HMI. 
 - Using the same differential signaling over twisted pair as RS-422. RS-485, like RS-422, can be made **full-duplex by using four wires**. 
 - It is generally accepted that RS-485 can be used with data rates up to **10 Mbit/s** or, at lower speeds, distances up to **1,200 m (4,000 ft)**. As a rule of thumb, the speed in bit/s multiplied by the length in metres should not exceed **10^8**. Thus a **50-meter cable should not signal faster than 2 Mbit/s**.
