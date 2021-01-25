@@ -27,10 +27,10 @@ The model partitions the flow of data in a communication system into seven abstr
 | 5.Session|
 | 6.Presentation|
 | 7.Application|
-| * Speed | 100/400 kbps |	a few mbps | 9.6/19.2/38.4/57.6/115.2 kbps |  a few mbps | ? | ? | 1.5(12)/480/5000/10000 Mbps | - | - |
+| * Speed | 100/400 Kbps |	a few Mbps | 9.6/19.2/38.4/57.6/115.2 Kbps |  a few mbps | 10/10/100/1000/400000 Mbps | ? | 1.5(12)/480/5000/10000 Mbps | - | - |
 | * Topology | Bus | Star | 1-to-1 | Daisy Chain with terminating resistors |  Daisy Chain with terminating resistors |  Star / Daisy Chain with terminating resistors | Star | - | - |
 | * Max # devices | 112(7bits)/1008(10bits) | multiple | 2 | 64(4-wires) / 32(2-wires) | 128 | 2(point-to-point)/30(chain) | 2(point-to-point)/127(per hub) | - | - |
-| * Max length    | 1m | 0.2m | 50m | 1200m | ? | ? | 2~5 m | - | - |
+| * Max length    | 1m | 0.2m | 50m | 1200m | ? | 500/100/15/100/1000up m | 2~5 m | - | - |
 | * Transfer mode | Half-Duplex | Full-Duplex | Half-Duplex | Full-Duplex(4-wires) / Half-Duplex(2-wires) | Half-Duplex | Full-Duplex | Full-Duplex(3.x) / Half-Duplex(1.x/2.x) | - | - |
 | *  Multi-Master Support | Y | N | N | N | Y | Y | N | - | - |
 
@@ -99,15 +99,11 @@ Overview: https://www.youtube.com/watch?v=HLziLmaYsO0
   - Repeaters and hubs. For signal degradation and timing reasons, coaxial Ethernet segments have a restricted size. Somewhat larger networks can be built by using an Ethernet repeater and hub. https://en.wikipedia.org/wiki/Ethernet_hub 
   - Switch and Router act as a director of the network. Connecting multiple devices and enabling communication between all the devices. https://en.wikipedia.org/wiki/Network_switch and https://en.wikipedia.org/wiki/Router_(computing)
   - Gateway and Bridge are used to connect multiple Ethernet network together, allow communication across them. Gateway connects two dissimilar network together. Bridge connects two similar network together. https://en.wikipedia.org/wiki/Gateway_(telecommunications) and https://en.wikipedia.org/wiki/Bridging_(networking)
-
-- full-duplex or half-dulplex,
-
-data link layer: media access control(MAC) logical link control(LLC), MAC each network interface card (NIC) have one, CSMA/CD to data transmission, star topology and bus topology connection, then connect several LAN by Internet to a wide area network (WAN)
-
-- Data-link layer: Systems communicating over Ethernet divide a stream of data into shorter pieces called frames. Each frame contains **source** and **destination addresses**, and **error-checking** data so that damaged frames can be detected and discarded; most often, higher-layer protocols trigger retransmission of lost frames. The 48-bit MAC address was adopted by other IEEE 802 networking standards, including IEEE 802.11 (Wi-Fi), as well as by FDDI. 
- 
-In IEEE 802.3, a datagram is called a packet or frame. Packet is used to describe the overall transmission unit and includes the preamble, start frame delimiter (SFD) and carrier extension (if present).[l] The frame begins after the start frame delimiter with a frame header featuring source and destination MAC addresses and the EtherType field giving either the protocol type for the payload protocol or the length of the payload. The middle section of the frame consists of payload data including any headers for other protocols (for example, Internet Protocol) carried in the frame. The frame ends with a 32-bit cyclic redundancy check, which is used to detect corruption of data in transit.[53]:sections 3.1.1 and 3.2 Notably, Ethernet packets have no time-to-live field, leading to possible problems in the presence of a switching loop. 
-
+- Data-link layer: Including framing, media access control(MAC) and logical link control(LLC).
+  - Logical Link Control(LLC): The LLC establishes paths for data on the Ethernet to transmit between devices. The LLC sublayer provides multiplexing mechanisms that make it possible for several network protocols to coexist within a multipoint network and to be transported over the same network medium. Since bit errors are very rare in wired networks, Ethernet does not provide flow control or automatic repeat request (ARQ), meaning that incorrect packets are detected but only cancelled, not retransmitted (except in case of collisions detected by the CSMA/CD MAC layer protocol). Instead, retransmissions rely on higher layer protocols. https://en.wikipedia.org/wiki/Logical_link_control
+  - Media Access Control(MAC): The Media Access Control uses hardware addresses that are assigned to Network Interface Cards (NIC) to identify a specific computer or device to show the source and destination of data transmissions. The 48-bit MAC address was adopted by other IEEE 802 networking standards, including IEEE 802.11 (Wi-Fi), as well as by FDDI. https://en.wikipedia.org/wiki/Medium_access_control
+  - The frame begins after the start frame delimiter with a frame header featuring source and destination MAC addresses and the EtherType field giving either the protocol type for the payload protocol or the length of the payload. The middle section of the frame consists of payload data including any headers for other protocols (for example, Internet Protocol) carried in the frame. The frame ends with a 32-bit cyclic redundancy check(CRC), which is used to detect corruption of data in transit. Notably, Ethernet packets have no time-to-live field, leading to possible problems in the presence of a switching loop. https://en.wikipedia.org/wiki/Ethernet_frame and https://en.wikipedia.org/wiki/Cyclic_redundancy_check.
+  - CSMA/CD is used as a standard for Ethernet to reduce data collisions and increase successful data transmission. The algorithm first checks to see if there is traffic on the network. If it does not find any, it will send out the first bit of information to see if a collision will occur. If this first bit is successful, then it will send out the other bits while still testing for collisions. If a collision occurs, the algorithm calculates a waiting time and then starts the process all over again until the full transmission is complete. https://en.wikipedia.org/wiki/Carrier-sense_multiple_access
 - Ethernet is widely used in homes and industry, and interworks well with wireless Wi-Fi technologies. The Internet Protocol is commonly carried over Ethernet and so it is considered one of the key technologies that make up the Internet. 
 
 # EtherCAT
