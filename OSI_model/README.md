@@ -27,6 +27,7 @@ The model partitions the flow of data in a communication system into seven abstr
 | 5.Session|
 | 6.Presentation|
 | 7.Application|
+| * Speed | 100/400 kbps |	a few mbps | 9.6/19.2/38.4/57.6/115.2 kbps | 
 
 # RS-232
 Overview: https://www.youtube.com/watch?v=eo9dbnrpspM
