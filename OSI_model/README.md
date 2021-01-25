@@ -30,7 +30,7 @@ The model partitions the flow of data in a communication system into seven abstr
 | * Speed | 100/400 kbps |	a few mbps | 9.6/19.2/38.4/57.6/115.2 kbps |  a few mbps | | | 1.5(12)/480/5000/10000 Mbps | - | - |
 | * Topology | Bus | Star | 1-to-1 | Daisy Chain with terminating resistors |  Daisy Chain with terminating resistors |  Star / Daisy Chain with terminating resistors | Star | - | - |
 | * Max # devices | 112(7bits)/1008(10bits) | ? | 2 | 64(4-wires) / 32(2-wires) | 128 | 2(point-to-point)/30(chain) | 2(point-to-point)/127(per hub) | - | - |
-| * Max length    |
+| * Max length    | 1m | 0.2m | 50m | 1200m | ? | ? | ? | - | - |
 | * Transfer mode | Half-Duplex | Full-Duplex | Half-Duplex | Full-Duplex(4-wires) / Half-Duplex(2-wires) | Half-Duplex | Full-Duplex | Full-Duplex(3.x) / Half-Duplex(1.x/2.x) | - | - |
 | *  Multi-Master Support | Y | N | N | N | Y | Y | N | - | - |
 
