@@ -27,7 +27,7 @@ The model partitions the flow of data in a communication system into seven abstr
 | 5.Session|
 | 6.Presentation|
 | 7.Application|
-| * Speed | 100/400 kbps |	a few mbps | 9.6/19.2/38.4/57.6/115.2 kbps | 
+| * Speed | 100/400 kbps |	a few mbps | 9.6/19.2/38.4/57.6/115.2 kbps |  a few mbps |
 
 # RS-232
 Overview: https://www.youtube.com/watch?v=eo9dbnrpspM
@@ -66,8 +66,17 @@ Overview: https://www.youtube.com/watch?v=eo9dbnrpspM
   - The DB25 connector recommended in the standard is large compared to current practice.
 
 # RS-485
-https://www.youtube.com/watch?v=3wgKcUDlHuM
-serial communication, younger and faster than RS-232, multiple device connected(32), 4000feet, no standard but 9pin DB9 cable is widely used, cable with shield to prevent noise
+Overview: https://www.youtube.com/watch?v=3wgKcUDlHuM
+- RS-485, also known as TIA-485(-A) or EIA-485, is a standard defining the electrical characteristics of drivers and receivers for use in **serial communications systems**. 
+- **Electrical signaling is balanced, and multipoint systems are supported**(multidrop communications).**Inexpensive, faster, longer distance, less noise**. Such as a younger brother of RS-232.
+- Digital communications networks implementing the standard can be used effectively over long distances and in electrically noisy environments. Multiple receivers may be connected to such a network in a linear, multidrop bus. These characteristics make RS-485 useful in industrial control systems and similar applications such as Variable Frequency Drives(VFD or motor drives), PLC, HMI. 
+- Using the same differential signaling over twisted pair as RS-422. RS-485, like RS-422, can be made **full-duplex by using four wires**. 
+- It is generally accepted that RS-485 can be used with data rates up to **10 Mbit/s** or, at lower speeds, distances up to **1,200 m (4,000 ft)**. As a rule of thumb, the speed in bit/s multiplied by the length in metres should not exceed **10^8**. Thus a **50-meter cable should not signal faster than 2 Mbit/s**.
+- RS-485 only specifies the electrical characteristics of the generator and the receiver. **OSI layer 1 the physical layer**. It does not specify or recommend any communications protocol; Other standards define the protocols for communication over an RS-485 link. The foreword to the standard references The Telecommunications Systems Bulletin TSB-89 which contains application guidelines, including data signaling rate vs. cable length, stub length, and configurations.
+  - Section 4 defines the electrical characteristics of the generator (transmitter or driver), receiver, transceiver, and system. These characteristics include: definition of a unit load, voltage ranges, open-circuit voltages, thresholds, and transient tolerance. 
+  - It also defines three generator interface points **(signal lines); A, B and C.** The data is transmitted on A and B. C is a ground reference. This section also defines the **logic states 1 (off, mark) and 0 (on, space)**, by the polarity between A and B terminals. If A is negative with respect to B, **the state is binary 1. The reversed polarity (A +, B −) is binary 0**. The standard does not assign any logic function to the two states. 
+  - In addition to the A and B connections, an optional, third connection may be present (the TIA standard requires the presence of a common return path between all circuit grounds along the balanced line for proper operation) called SC, G or reference, the common signal reference ground used by the receiver to measure the A and B voltages. This connection may be used to limit the common-mode signal that can be impressed on the receiver inputs. The allowable common-mode voltage is in the range −7V to +12V, i.e. ±7V on top of the 0-5V signal range. Failure to stay within this range will result in, at best, signal corruption, and, at worst, damage to connected devices. 
+  - Connector types are not specified. Refer to RS-232, using DB9 connector. Cable is using balanced interconnecting cable (shielded cable) to prevent noise.
 
 # Ethernet
 https://www.youtube.com/watch?v=HLziLmaYsO0 
@@ -95,5 +104,9 @@ Read the details in:
 # Reference
 [1] https://en.wikipedia.org/wiki/OSI_model  
 [2] http://linux.vbird.org/linux_server/0110network_basic.php#whatisnetwork_what  
-[3] https://en.wikipedia.org/wiki/RS-232
-[4] https://en.wikipedia.org/wiki/D-subminiature
+[3] https://en.wikipedia.org/wiki/RS-232  
+[4] https://en.wikipedia.org/wiki/D-subminiature  
+[5] https://en.wikipedia.org/wiki/Multidrop_bus  
+[6] https://en.wikipedia.org/wiki/RS-485  
+[7] https://en.wikipedia.org/wiki/Shielded_cable  
+[8] https://en.wikipedia.org/wiki/Balanced_line  
