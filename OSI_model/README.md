@@ -20,19 +20,19 @@ The model partitions the flow of data in a communication system into seven abstr
 # Common Protocol in Robotics Application: Overview
 |           |  I2C | SPI |  RS-232(UART based) | RS-485 (UART based) |  CAN          | Ethernet  |  USB  |  CANOpen | EtherCAT | 
 | --------  | ---- | --- | ------------------- | ------------------- | ------------- | --------  | ------| -------- | -------- | 
-| 1.Physical|  I2C |  SPI  | RS-232(EIA/TIA-232-F) | RS-485(EIA/TIA-485-A)|  ISO 11898-2  | IEEE 802.3 | USB 1.1/2.0/3.0/3.1 | CAN | Ethernet |
-| 2.Data-Link| I2C |  SPI  |    UART               | UART                 |  ISO 11898-1  | IEEE 802.3  | USB 1.1/2.0/3.0/3.1 | CAN | Ethernet MAC, Mailbox/Buffer Handling, Process Data Mapping, Extreme Fast Auto-Forwarder |
-| 3.Network|   | | | | | | USB 1.1/2.0/3.0/3.1 |
-| 4.Transport| | | | | | | USB 1.1/2.0/3.0/3.1 |
+| 1.Physical|  I2C |  SPI  | RS-232(EIA/TIA-232-F) | RS-485(EIA/TIA-485-A)|  ISO 11898-2  | IEEE 802.3 | USB 1.1/2.0/3.0/3.1 | CAN | IEC 61158-> Ethernet(100BASE-TX, 100BASE-FX) |
+| 2.Data-Link| I2C |  SPI  |    UART               | UART                 |  ISO 11898-1  | IEEE 802.3  | USB 1.1/2.0/3.0/3.1 | CAN | IEC 61158-> Ethernet(MAC), Mailbox/Buffer Handling, Process Data Mapping, Extreme Fast Auto-Forwarder |
+| 3.Network|   | | | | | | USB 1.1/2.0/3.0/3.1 | | IP (optional)
+| 4.Transport| | | | | | | USB 1.1/2.0/3.0/3.1 | | TCP/UDP (optional)
 | 5.Session|
 | 6.Presentation|
-| 7.Application|
-| * Speed | 100/400 Kbps |	a few Mbps | 9.6/19.2/38.4/57.6/115.2 Kbps |  a few mbps | ? | 10/10/100/1000/400000 Mbps | 1.5(12)/480/5000/10000 Mbps | - | - |
-| * Topology | Bus | Star | 1-to-1 | Daisy Chain with terminating resistors |  Daisy Chain with terminating resistors |  Star / Daisy Chain with terminating resistors | Star | - | - |
-| * Max # devices | 112(7bits)/1008(10bits) | multiple | 2 | 64(4-wires) / 32(2-wires) | 128 | 2(point-to-point)/30(chain) | 2(point-to-point)/127(per hub) | - | - |
-| * Max length    | 1m | 0.2m | 50m | 1200m | ? | 500/100/15/100/1000up m | 2~5 m | - | - |
-| * Transfer mode | Half-Duplex | Full-Duplex | Half-Duplex | Full-Duplex(4-wires) / Half-Duplex(2-wires) | Half-Duplex | Full-Duplex | Full-Duplex(3.x) / Half-Duplex(1.x/2.x) | - | - |
-| *  Multi-Master Support | Y | N | N | N | Y | Y | N | - | - |
+| 7.Application| | | | | | | | | standard data(1~4,7), real-time data(1~2,7)
+| * Speed | 100/400 Kbps |	a few Mbps | 9.6/19.2/38.4/57.6/115.2 Kbps |  a few mbps | ? | 10/10/100/1000/400000 Mbps | 1.5(12)/480/5000/10000 Mbps | - | 100/100 Mbps|
+| * Topology | Bus | Star | 1-to-1 | Daisy Chain with terminating resistors |  Daisy Chain with terminating resistors |  Star / Daisy Chain with terminating resistors | Star | - | Star / Tree / Line / Bus / Ring|
+| * Max # devices | 112(7bits)/1008(10bits) | multiple | 2 | 64(4-wires) / 32(2-wires) | 128 | 2(point-to-point)/30(chain) | 2(point-to-point)/127(per hub) | 127 (0 is reserved) | 65536 |
+| * Max length    | 1m | 0.2m | 50m | 1200m | ? | 500/100/15/100/1000up m | 2~5 m | - | 100m / a few km |
+| * Transfer mode | Half-Duplex | Full-Duplex | Half-Duplex | Full-Duplex(4-wires) / Half-Duplex(2-wires) | Half-Duplex | Full-Duplex | Full-Duplex(3.x) / Half-Duplex(1.x/2.x) | Half-duplex | Full-Duplex |
+| *  Multi-Master Support | Y | N | N | N | Y | Y | N | N | N |
 
 
 # RS-232
@@ -107,8 +107,15 @@ Overview: https://www.youtube.com/watch?v=HLziLmaYsO0
 - Ethernet is widely used in homes and industry, and interworks well with wireless Wi-Fi technologies. The Internet Protocol is commonly carried over Ethernet and so it is considered one of the key technologies that make up the Internet. 
 
 # EtherCAT
-https://www.youtube.com/watch?v=tYAl2jkaB8Q
-ethercat is a ethernet based communication protocol, ethernet for control automation technology(CAT), with several mechanism benefit to automation application
+Overview: https://www.youtube.com/watch?v=tYAl2jkaB8Q
+- EtherCAT (Ethernet for Control Automation Technology) is an Ethernet-based fieldbus system, invented by Beckhoff Automation. The protocol is standardized in IEC 61158 and is suitable for both hard and soft real-time computing requirements in automation technology. 
+- Fieldbus is the name of a family of industrial computer networks used for real-time distributed control. Fieldbus profiles are standardized by the International Electrotechnical Commission (IEC) as IEC 61784/61158. https://en.wikipedia.org/wiki/Fieldbus
+- The goal during development of EtherCAT was to apply Ethernet for automation applications requiring 1.short data update times (also called cycle times; ≤ 100 μs) with low communication jitter (for precise synchronization purposes; ≤ 1 μs) and 2.reduced hardware costs. 
+- "On the fly": With EtherCAT, the standard Ethernet packet or frame (according to IEEE 802.3) is no longer received, interpreted, and copied as process data at every node(several frames). The bandwidth and real-time are the problem if working in Ethernet mode. The EtherCAT slave devices read the data addressed to them while the telegram(one frame) passes through the device, processing data "on the fly". In other words, real-time data and messages are prioritized over more general, less time-sensitive or heavy load data. Similarly, input data are inserted while the telegram passes through. A frame is not completely received before being processed; instead processing starts as soon as possible. Sending is also conducted with a minimum delay of small bit times. Typically the entire network can be addressed with just one frame.
+- Compatible Speed: Although there is still a small delay in the data frame as the device adds its data to it, it is greatly reduced by the often single data stream of EtherCAT versus the multiple Ethernet frames used in an Ethernet network. This advantage can also be a disadvantage. Many devices may not be able to handle these highly decreased cycle times and EtherCAT network may need to be slowed to accommodate these devices. Since the EtherCAT network can be slowed, mark the disadvantage as an advantage once again.
+- Distributed Clock System: EtherCAT also utilizes a distributed clock system. This method allows for low jitter without additional hardware and it meets with the synchronization importance desired in industrial automation. As the EtherCAT frame passes through each node, the node adds a “received message” timestamp to its data. Each node adds the timestamp as the message is received and then, each node again attaches a timestamp as the frame moves back through the nodes, on the way back to the master. The master then has an accurate delay for each node as timestamp data is calculated with every data frame transmission. With EtherCAT’s intrinsic ring topology, this ensures increasingly accurate data with every data transmission because of the distributed clock mechanism.
+- Topology: Each EtherCAT device typically has two Ethernet ports, the first port being the receiving port or previous node’s cable and the second port connected to the next node in the network. It utilizes Ethernets full duplex layers, the EtherCAT slave will automatically return the frame, to the master, with an open port detected downstream, essentially, self-terminating. Ethernet’s star topology is simple and can be used but EtherCAT networks can extend well beyond that with a tree, line, ring, etc. It can also be used in a Fieldbus type system using Ethernet hardware, giving incredible flexibility for your EtherCAT network.
+- Redundancy Using Ring Topology: Considering the inherent “ring technology” of EtherCAT, connecting the network in a ring topology would be a “redundant system” if you can imagine. Because it’s inherently a ring topology, connecting the master’s second port, if available, would provide redundancy on the other side of the network break. Each topology type should be investigated for your network to conclude which solution would be best for your application.
 
 # CAN
 https://www.youtube.com/watch?v=FqLDpHsxvf8
@@ -137,9 +144,11 @@ Read the details in:
 [8] https://en.wikipedia.org/wiki/Balanced_line  
 [9] https://en.wikipedia.org/wiki/Ethernet  
 [10] https://www.geeksforgeeks.org/network-devices-hub-repeater-bridge-switch-router-gateways/  
-[11] https://en.wikipedia.org/wiki/USB  
-[12] USB3.1: https://www.synopsys.com/designware-ip/technical-bulletin/protocol-layer-changes.html  
+[11] https://en.wikipedia.org/wiki/EtherCAT
+[12] https://en.wikipedia.org/wiki/USB  
+[13] USB3.1: https://www.synopsys.com/designware-ip/technical-bulletin/protocol-layer-changes.html  
 
+[] EtherCAT v.s. CANOpen: https://dewesoft.com/daq/what-is-ethercat-protocol
 [] Comparison1: http://ucpros.com/work%20samples/Microcontroller%20Communication%20Interfaces%203.htm  
 [] Comparison2: https://blog.servo2go.com/2013/09/23/comparing-canopen-and-ethercat-fieldbus-networks/  
 [] Comparison3: https://blog.csdn.net/djl806943371/article/details/89331048  
