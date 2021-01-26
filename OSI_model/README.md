@@ -26,7 +26,7 @@ The model partitions the flow of data in a communication system into seven abstr
 | 4.Transport| | | | | | | USB 1.1/2.0/3.0/3.1 | | TCP/UDP (optional)
 | 5.Session|
 | 6.Presentation|
-| 7.Application| | | | | | | | | standard data(1~4,7), real-time data(1~2,7)
+| 7.Application| | | | | | | | | standard data(1\~4,7), real-time data(1\~2,7)
 | * Speed | 100/400 Kbps |	a few Mbps | 9.6/19.2/38.4/57.6/115.2 Kbps |  a few mbps | ? | 10/10/100/1000/400000 Mbps | 1.5(12)/480/5000/10000 Mbps | - | 100/100 Mbps|
 | * Topology | Bus | Star | 1-to-1 | Daisy Chain with terminating resistors |  Daisy Chain with terminating resistors |  Star / Daisy Chain with terminating resistors | Star | - | Star / Tree / Line / Bus / Ring|
 | * Max # devices | 112(7bits)/1008(10bits) | multiple | 2 | 64(4-wires) / 32(2-wires) | 128 | 2(point-to-point)/30(chain) | 2(point-to-point)/127(per hub) | 127 (0 is reserved) | 65536 |
