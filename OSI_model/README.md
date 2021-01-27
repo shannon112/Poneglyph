@@ -27,10 +27,10 @@ The model partitions the flow of data in a communication system into seven abstr
 | 5.Session| | | | | | | | CiA 303-1
 | 6.Presentation| | | | | | | | CiA 303-2
 | 7.Application| | | | | | | | CiA 401, 402, ... | standard data(1\~4,7), real-time data(1\~2,7)
-| * Speed | 100/400 Kbps |	a few Mbps | 9.6/19.2/38.4/57.6/115.2 Kbps |  a few mbps | 125 Kbps/1 Mbps | 10/10/100/1000/400000 Mbps | 1.5(12)/480/5000/10000 Mbps | - | 100/100 Mbps|
-| * Topology | Bus | Star | 1-to-1 | Daisy Chain with terminating resistors |  Daisy Chain with terminating resistors |  Star / Daisy Chain with terminating resistors | Star | - | Star / Tree / Line / Bus / Ring|
+| * Speed | 100/400 Kbps |	a few Mbps | 9.6/19.2/38.4/57.6/115.2 Kbps |  a few mbps | 125 Kbps/1 Mbps | 10/10/100/1000/400000 Mbps | 1.5(12)/480/5000/10000 Mbps | 125 Kbps/1 Mbps | 100/100 Mbps|
+| * Topology | Bus | Star | 1-to-1 | Daisy Chain with terminating resistors |  Daisy Chain with terminating resistors |  Star / Daisy Chain with terminating resistors | Star | Daisy Chain with terminating resistors | Star / Tree / Line / Bus / Ring|
 | * Max # devices | 112(7bits)/1008(10bits) | multiple | 2 | 64(4-wires) / 32(2-wires) | 128 | 2(point-to-point)/30(chain) | 2(point-to-point)/127(per hub) | 128 | 65536 |
-| * Max length    | 1m | 0.2m | 50m | 1200m | 500 meters / 40 meters | 500/100/15/100/1000up m | 2~5 m | - | 100m / a few km |
+| * Max length    | 1m | 0.2m | 50m | 1200m | 500 meters / 40 meters | 500/100/15/100/1000up m | 2~5 m | 500 meters / 40 meters | 100m / a few km |
 | * Transfer mode | Half-Duplex | Full-Duplex | Half-Duplex | Full-Duplex(4-wires) / Half-Duplex(2-wires) | Half-Duplex | Full-Duplex | Full-Duplex(3.x) / Half-Duplex(1.x/2.x) | Half-duplex | Full-Duplex |
 | *  Multi-Master Support | Y | N | N | N | Y | Y | N | N | N |
 
@@ -149,8 +149,8 @@ Overview: https://www.youtube.com/watch?v=DlbkWryzJqg
 - There are six core CANopen concepts:
 - 1.Communication Models: There are 3 models for device/node communication: Master/slave, client/server and producer/consumer.
   - Master/Slave: One node (e.g. the control interface) acts as application master or host controller. It sends/requests data from the slaves (e.g. the servo motors). This is used in e.g. diagnostics or state management. There can be 0-127 slaves in standard applications. Note that in a single CANopen network, there can be different host controllers sharing the same data link layer.
-  - Client/Server: A client sends a data request to a server, which replies with the requested data. Used e.g. when an application master needs data from the OD of a slave. A read from a server is an “upload”, while a write is a “download” (the terminology takes a "server side" perspective). 
-  - Consumer/Producer: Here, the producer node broadcasts data to the network, which is consumed by the consumer node. The producer either sends this data on request (pull model) or without a specific request (push model).
+  - Client/Server[SDO]: A client sends a data request to a server, which replies with the requested data. Used e.g. when an application master needs data from the OD of a slave. A read from a server is an “upload”, while a write is a “download” (the terminology takes a "server side" perspective). 
+  - Consumer/Producer[PDO]: Here, the producer node broadcasts data to the network, which is consumed by the consumer node. The producer either sends this data on request (pull model) or without a specific request (push model).
 - The CANopen frame: COB-ID+RTR+Data_length+Data. The 11-bit CAN ID is referred to as the Communication Object Identifier (COB-ID) and is split in two parts: the first 4 bits equal a function code and the next 7 bits contain the node ID. The COB-IDs (e.g. 381, 581, …) are linked to the communication services (transmit PDO 3, transmit SDO, …). As such, the COB-ID details which node is sending/receiving data - and what service is used.
 - 2.Communication Protocols: Protocols are used for communication, e.g. configuring nodes (SDOs) or transmitting real-time data (PDOs).
   - Network Management (NMT): The NMT service is used for controlling the state of CANopen devices (e.g. pre-operational, operational, stopped) by means of NMT commands (e.g. start, stop, reset).
@@ -161,10 +161,22 @@ Overview: https://www.youtube.com/watch?v=DlbkWryzJqg
   - Service Data Object[SDO]: The SDO services are used to access/change values in the object dictionary of a CANopen device - e.g. when an application master needs to change certain configurations of a CANopen device. 
   - Node monitoring(Heartbeat)[SDO]: The Heartbeat service has two purposes: To provide an 'alive' message and to confirm the NMT command.
 - 3.Device States: A device supports different states. A 'master' node can change state of a 'slave' node - e.g. resetting it.
-- 4.Object Dictionary: Each device has an OD with entries that specify e.g. the device config. It can be accessed via SDOs.
-- 5.Electronic Data Sheet: The EDS is a standard file format for OD entries - allowing e.g. service tools to update devices.
-- 6.Device Profiles: Standards describe e.g. I/O modules (CiA 401) and motion-control (CiA 402) for vendor independence.
-
+- 4.Object Dictionary(OD): Each device must has an OD with entries that specify e.g. the device config. It can be accessed via SDOs.
+  - The object dictionary is a standardized structure containing all parameters describing the behavior of a CANopen node.
+  - OD entries are looked up via a 16-bit index(4 digits hex) and 8-bit subindex(2 digits hex). For example, index 1008 (subindex 0) of a CANopen-compliant node OD contains the node device name. 
+  - Specifically, an entry in the object dictionary is defined by attributes: Index: 16-bit base address of the object, Object name: Manufacturer device name, Object code: Array, variable, or record, Data type: E.g. VISIBLE_STRING, or UNSIGNED32 or Record Name, Access: rw (read/write), ro (read-only), wo (write-only), Category: Indicates if this parameter is mandatory/optional (M/O)
+  - OD standardized sections: The object dictionary is split into standardized sections where some entries are mandatory and others are fully customizable. Importantly, OD entries of a device (e.g. a slave) can be accessed by another device (e.g. a master) via CAN using e.g. SDOs. For example, this might let an application master change whether a slave node logs data via a specific input sensor - or how often the slave sends a heartbeat.
+- 5.Electronic Data Sheet(EDS): The EDS is a standard file format for OD entries - allowing e.g. service tools to update devices.
+  - To simplify this, the CiA 306 standard defines a human-readable (and machine friendly) INI file format, acting as a "template" for the OD of a device - e.g. the “ServoMotor3000”. This EDS is typically provided by the vendor and contains info on all device objects (but not values).
+- 6.Device Configuration Profiles(DCF): Standards describe e.g. I/O modules (CiA 401) and motion-control (CiA 402) for vendor independence.
+  - Assume a factory has bought a ServoMotor3000 to integrate into their conveyor belt. In doing so, the operator edits the device EDS and adds specific parameter values and/or changes the names of each object described in the EDS. In doing so, the operator effectively creates what is known as a Device Configuration File (DCF). With this in place, the ServoMotor3000 is ready for integration into the specific CANopen network on-site. 
+ - The SDO service allows a CANopen node to read/edit values of another node’s object dictionary over the CAN network. As mentioned under 'communication models', the CANopen SDO services utilize a "client/server" behavior. Specifically, an SDO "client" initiates the communication with one dedicated SDO "server". The purpose can be to update an OD entry (called an "SDO download") or read an entry ("SDO upload"). In simple master/slave networks, the node with NMT master functionality acts as the client for all NMT slave nodes(select one as a server, ignore the others) reading or writing to their ODs.
+    - SDOs are flexible, but carry a lot of overhead - making them less ideal for real-time operational data.
+- The CANopen PDO service is used for effectively sharing real-time operational data across CANopen nodes. For example, the PDO would carry pressure data from a pressure transducer - or temperature data from a temperature sensor. 
+  - Can’t the SDO service just do this? Yes, in principle the SDO service could be used for this. However, a single SDO response can only carry 4 data bytes due to overhead (command byte and OD addresses).
+  - In contrast, a PDO message can contain 8 full bytes of data - and it can contain multiple object parameter values within a single frame. Thus, what would require at least 4 frames with SDO could potentially be done with 1 frame in the PDO service.
+  - The PDO is often seen as the most important CANopen protocol as it carries the bulk of information.
+  
 # I2C, SPI, UART
 Read the details in:
 - Comparison: https://shannon112.blogspot.com/2021/01/embedded-system-serial-communication.html
@@ -183,15 +195,15 @@ Read the details in:
 [8] https://en.wikipedia.org/wiki/Balanced_line  
 [9] https://en.wikipedia.org/wiki/Ethernet  
 [10] https://www.geeksforgeeks.org/network-devices-hub-repeater-bridge-switch-router-gateways/  
-[11] https://en.wikipedia.org/wiki/EtherCAT
+[11] https://en.wikipedia.org/wiki/EtherCAT  
 [12] https://en.wikipedia.org/wiki/USB  
 [13] USB3.1: https://www.synopsys.com/designware-ip/technical-bulletin/protocol-layer-changes.html  
-[14] https://en.wikipedia.org/wiki/CAN_bus 
-[15] https://www.csselectronics.com/screen/page/simple-intro-to-can-bus
-[16] https://en.wikipedia.org/wiki/CANopen
-[17] https://www.csselectronics.com/screen/page/canopen-tutorial-simple-intro
+[14] https://en.wikipedia.org/wiki/CAN_bus  
+[15] https://www.csselectronics.com/screen/page/simple-intro-to-can-bus  
+[16] https://en.wikipedia.org/wiki/CANopen  
+[17] https://www.csselectronics.com/screen/page/canopen-tutorial-simple-intro  
 
-[] EtherCAT v.s. CANOpen: https://dewesoft.com/daq/what-is-ethercat-protocol
+[] EtherCAT v.s. CANOpen: https://dewesoft.com/daq/what-is-ethercat-protocol  
 [] EtherCAT v.s. CANOpen v.s RS: https://blog.servo2go.com/2013/09/23/comparing-canopen-and-ethercat-fieldbus-networks/  
 [] Ethernet v.s. CAN v.s. RS v.s USB v.s LIN: http://ucpros.com/work%20samples/Microcontroller%20Communication%20Interfaces%203.htm    
 [] Inspired from: https://blog.csdn.net/djl806943371/article/details/89331048  
