@@ -20,16 +20,16 @@ The model partitions the flow of data in a communication system into seven abstr
 # Common Protocol in Robotics Application: Overview
 |           |  I2C | SPI |  RS-232(UART based) | RS-485 (UART based) |  CAN          | Ethernet  |  USB  |  CANOpen | EtherCAT | 
 | --------  | ---- | --- | ------------------- | ------------------- | ------------- | --------  | ------| -------- | -------- | 
-| 1.Physical|  I2C |  SPI  | RS-232(EIA/TIA-232-F) | RS-485(EIA/TIA-485-A)|  ISO 11898-2  | IEEE 802.3 | USB 1.1/2.0/3.0/3.1 | CAN | IEC 61158-> Ethernet(100BASE-TX, 100BASE-FX) |
-| 2.Data-Link| I2C |  SPI  |    UART               | UART                 |  ISO 11898-1  | IEEE 802.3  | USB 1.1/2.0/3.0/3.1 | CAN | IEC 61158-> Ethernet(MAC), Mailbox/Buffer Handling, Process Data Mapping, Extreme Fast Auto-Forwarder |
+| 1.Physical|  I2C |  SPI  | RS-232(EIA/TIA-232-F) | RS-485(EIA/TIA-485-A)|  ISO 11898-2  | IEEE 802.3 | USB 1.1/2.0/3.0/3.1 | CAN(ISO 11898-2) | IEC 61158-> Ethernet(100BASE-TX, 100BASE-FX) |
+| 2.Data-Link| I2C |  SPI  |    UART               | UART                 |  ISO 11898-1  | IEEE 802.3  | USB 1.1/2.0/3.0/3.1 | CAN(ISO 11898-1) | IEC 61158-> Ethernet(MAC), Mailbox/Buffer Handling, Process Data Mapping, Extreme Fast Auto-Forwarder |
 | 3.Network|   | | | | | | USB 1.1/2.0/3.0/3.1 | | IP (optional)
 | 4.Transport| | | | | | | USB 1.1/2.0/3.0/3.1 | | TCP/UDP (optional)
-| 5.Session|
-| 6.Presentation|
-| 7.Application| | | | | | | | | standard data(1\~4,7), real-time data(1\~2,7)
+| 5.Session| | | | | | | | CiA 303-1
+| 6.Presentation| | | | | | | | CiA 303-2
+| 7.Application| | | | | | | | CiA 401, 402, ... | standard data(1\~4,7), real-time data(1\~2,7)
 | * Speed | 100/400 Kbps |	a few Mbps | 9.6/19.2/38.4/57.6/115.2 Kbps |  a few mbps | 125 Kbps/1 Mbps | 10/10/100/1000/400000 Mbps | 1.5(12)/480/5000/10000 Mbps | - | 100/100 Mbps|
 | * Topology | Bus | Star | 1-to-1 | Daisy Chain with terminating resistors |  Daisy Chain with terminating resistors |  Star / Daisy Chain with terminating resistors | Star | - | Star / Tree / Line / Bus / Ring|
-| * Max # devices | 112(7bits)/1008(10bits) | multiple | 2 | 64(4-wires) / 32(2-wires) | 128 | 2(point-to-point)/30(chain) | 2(point-to-point)/127(per hub) | 127 (0 is reserved) | 65536 |
+| * Max # devices | 112(7bits)/1008(10bits) | multiple | 2 | 64(4-wires) / 32(2-wires) | 128 | 2(point-to-point)/30(chain) | 2(point-to-point)/127(per hub) | 128 | 65536 |
 | * Max length    | 1m | 0.2m | 50m | 1200m | 500 meters / 40 meters | 500/100/15/100/1000up m | 2~5 m | - | 100m / a few km |
 | * Transfer mode | Half-Duplex | Full-Duplex | Half-Duplex | Full-Duplex(4-wires) / Half-Duplex(2-wires) | Half-Duplex | Full-Duplex | Full-Duplex(3.x) / Half-Duplex(1.x/2.x) | Half-duplex | Full-Duplex |
 | *  Multi-Master Support | Y | N | N | N | Y | Y | N | N | N |
@@ -142,9 +142,28 @@ Overview: https://www.youtube.com/watch?v=FqLDpHsxvf8
 -  CANopen is used widely in embedded control applications, incl. e.g. industrial automation. It is based on CAN, meaning that a CAN bus data logger is also able to log CANopen data. This is key in e.g. machine diagnostics or optimizing production. 
 
 # CANOpen
-https://www.youtube.com/watch?v=DlbkWryzJqg
-CANOpen is a CAN based communication protocol, but 6 new important concept. https://www.csselectronics.com/screen/page/canopen-tutorial-simple-intro
-https://www.canopensolutions.com/english/about_canopen/CANopen-and-the-OSI-reference-model.shtml#
+Overview: https://www.youtube.com/watch?v=DlbkWryzJqg
+- CANopen is a CAN based communication protocol and device profile specification. The CANopen standard is useful as it enables off-the-shelf interoperability between devices (nodes) in e.g. industrial machinery. Further, it provides standard methods for configuring devices - also after installation. CANopen was originally designed for motion-oriented machine control systems. Today, CANopen is extensively used in motor control (stepper/servomotors) - but also a wide range of other applications: Robotics, Medical, Automotive.
+- In terms of the OSI model, CANopen implements the layers above and including the network layer. The CANopen standard consists of an addressing scheme, several small communication protocols and an application layer defined by a device profile. The communication protocols have support for network management, device monitoring and communication between nodes, including a simple transport layer for message segmentation/desegmentation. The lower level protocol implementing the data link and physical layers is usually Controller Area Network (CAN), although devices using some other means of communication (such as Ethernet Powerlink, EtherCAT) can also implement the CANopen device profile.
+- The basic CANopen device and communication profiles are given in the CiA 301 specification released by CAN in Automation. Profiles for more specialized devices are built on top of this basic profile, and are specified in numerous other standards released by CAN in Automation, such as CiA 401 for I/O-modules and CiA 402 for motion control. 
+- There are six core CANopen concepts:
+- 1.Communication Models: There are 3 models for device/node communication: Master/slave, client/server and producer/consumer.
+  - Master/Slave: One node (e.g. the control interface) acts as application master or host controller. It sends/requests data from the slaves (e.g. the servo motors). This is used in e.g. diagnostics or state management. There can be 0-127 slaves in standard applications. Note that in a single CANopen network, there can be different host controllers sharing the same data link layer.
+  - Client/Server: A client sends a data request to a server, which replies with the requested data. Used e.g. when an application master needs data from the OD of a slave. A read from a server is an “upload”, while a write is a “download” (the terminology takes a "server side" perspective). 
+  - Consumer/Producer: Here, the producer node broadcasts data to the network, which is consumed by the consumer node. The producer either sends this data on request (pull model) or without a specific request (push model).
+- The CANopen frame: COB-ID+RTR+Data_length+Data. The 11-bit CAN ID is referred to as the Communication Object Identifier (COB-ID) and is split in two parts: the first 4 bits equal a function code and the next 7 bits contain the node ID. The COB-IDs (e.g. 381, 581, …) are linked to the communication services (transmit PDO 3, transmit SDO, …). As such, the COB-ID details which node is sending/receiving data - and what service is used.
+- 2.Communication Protocols: Protocols are used for communication, e.g. configuring nodes (SDOs) or transmitting real-time data (PDOs).
+  - Network Management (NMT): The NMT service is used for controlling the state of CANopen devices (e.g. pre-operational, operational, stopped) by means of NMT commands (e.g. start, stop, reset).
+  - Synchronization (SYNC): The SYNC message is used e.g. to synchronize the sensing of inputs and actuation of several CANopen devices - typically triggered by the application master.  
+  - Emergency (EMCY): The emergency service is used in case a device experiences a fatal error (e.g. a sensor failure), allowing it to indicate this to the rest of the network.
+  - Timestamp(TIME)[PDO]: With this communication service a global network time can be distributed. The TIME service contains a 6-byte date & time information.
+  - Proccess Data Object[PDO]: The PDO service is used to transmit real-time data between devices - e.g. measured data such as position or command data such as torque requests. 
+  - Service Data Object[SDO]: The SDO services are used to access/change values in the object dictionary of a CANopen device - e.g. when an application master needs to change certain configurations of a CANopen device. 
+  - Node monitoring(Heartbeat)[SDO]: The Heartbeat service has two purposes: To provide an 'alive' message and to confirm the NMT command.
+- 3.Device States: A device supports different states. A 'master' node can change state of a 'slave' node - e.g. resetting it.
+- 4.Object Dictionary: Each device has an OD with entries that specify e.g. the device config. It can be accessed via SDOs.
+- 5.Electronic Data Sheet: The EDS is a standard file format for OD entries - allowing e.g. service tools to update devices.
+- 6.Device Profiles: Standards describe e.g. I/O modules (CiA 401) and motion-control (CiA 402) for vendor independence.
 
 # I2C, SPI, UART
 Read the details in:
@@ -169,6 +188,8 @@ Read the details in:
 [13] USB3.1: https://www.synopsys.com/designware-ip/technical-bulletin/protocol-layer-changes.html  
 [14] https://en.wikipedia.org/wiki/CAN_bus 
 [15] https://www.csselectronics.com/screen/page/simple-intro-to-can-bus
+[16] https://en.wikipedia.org/wiki/CANopen
+[17] https://www.csselectronics.com/screen/page/canopen-tutorial-simple-intro
 
 [] EtherCAT v.s. CANOpen: https://dewesoft.com/daq/what-is-ethercat-protocol
 [] EtherCAT v.s. CANOpen v.s RS: https://blog.servo2go.com/2013/09/23/comparing-canopen-and-ethercat-fieldbus-networks/  
