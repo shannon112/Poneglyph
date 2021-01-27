@@ -27,10 +27,10 @@ The model partitions the flow of data in a communication system into seven abstr
 | 5.Session|
 | 6.Presentation|
 | 7.Application| | | | | | | | | standard data(1\~4,7), real-time data(1\~2,7)
-| * Speed | 100/400 Kbps |	a few Mbps | 9.6/19.2/38.4/57.6/115.2 Kbps |  a few mbps | ? | 10/10/100/1000/400000 Mbps | 1.5(12)/480/5000/10000 Mbps | - | 100/100 Mbps|
+| * Speed | 100/400 Kbps |	a few Mbps | 9.6/19.2/38.4/57.6/115.2 Kbps |  a few mbps | 125 Kbps/1 Mbps | 10/10/100/1000/400000 Mbps | 1.5(12)/480/5000/10000 Mbps | - | 100/100 Mbps|
 | * Topology | Bus | Star | 1-to-1 | Daisy Chain with terminating resistors |  Daisy Chain with terminating resistors |  Star / Daisy Chain with terminating resistors | Star | - | Star / Tree / Line / Bus / Ring|
 | * Max # devices | 112(7bits)/1008(10bits) | multiple | 2 | 64(4-wires) / 32(2-wires) | 128 | 2(point-to-point)/30(chain) | 2(point-to-point)/127(per hub) | 127 (0 is reserved) | 65536 |
-| * Max length    | 1m | 0.2m | 50m | 1200m | ? | 500/100/15/100/1000up m | 2~5 m | - | 100m / a few km |
+| * Max length    | 1m | 0.2m | 50m | 1200m | 500 meters / 40 meters | 500/100/15/100/1000up m | 2~5 m | - | 100m / a few km |
 | * Transfer mode | Half-Duplex | Full-Duplex | Half-Duplex | Full-Duplex(4-wires) / Half-Duplex(2-wires) | Half-Duplex | Full-Duplex | Full-Duplex(3.x) / Half-Duplex(1.x/2.x) | Half-duplex | Full-Duplex |
 | *  Multi-Master Support | Y | N | N | N | Y | Y | N | N | N |
 
@@ -118,8 +118,28 @@ Overview: https://www.youtube.com/watch?v=tYAl2jkaB8Q
 - Redundancy Using Ring Topology: Considering the inherent “ring technology” of EtherCAT, connecting the network in a ring topology would be a “redundant system” if you can imagine. Because it’s inherently a ring topology, connecting the master’s second port, if available, would provide redundancy on the other side of the network break. Each topology type should be investigated for your network to conclude which solution would be best for your application.
 
 # CAN
-https://www.youtube.com/watch?v=FqLDpHsxvf8
-The Controller Area Network system, electronic control systems (ECS) are connected by CAN bus. In automative system ECUs can be engine control unit, airbags,  audio system, ...etc(more than 70 ECUs in a morden car). 1.Low cost 2.Centralized 3.Robust 4.Efficient 5.Flexible, Bosch invent it. CAN msg format 8 key parts. Related protocol: SAE J1939, OBD-II, CANopen. It is a data link layer(ISO 11898-1) and physical layer(ISO 11898-2).
+Overview: https://www.youtube.com/watch?v=FqLDpHsxvf8
+- A Controller Area Network (CAN bus) is a robust vehicle bus standard designed to allow microcontrollers and devices to communicate with each other's applications without a host computer. A car is like a human body. CAN bus is the nervous system, enabling communication. In turn, 'nodes' or 'ECUs" are like parts of the body, interconnected via the CAN bus. Information sensed by one part can be shared with another.
+- In an automotive CAN bus system, electronic control units (ECUs) can e.g. be the engine control unit, airbags, audio system etc. A modern car may have up to 70 ECUs - and each of them may have information that needs to be shared with other parts of the network. https://en.wikipedia.org/wiki/Electronic_control_unit
+- 1.Simple & low cost: It is a message-based protocol, designed originally for multiplex electrical wiring within automobiles to save on copper, but can also be used in many other contexts. The CAN bus system enables each ECU to communicate with all other ECUs - without complex dedicated wiring. ECUs communicate via a single CAN system instead of via direct complex analogue signal lines - reducing errors, weight, wiring and costs 
+- 2.Fully centralized: The CAN bus provides 'one point-of-entry' to communicate with all network ECUs - enabling central diagnostics, data logging and configuration
+- Frames are received by all devices, including by the transmitting device. Specifically, an ECU can prepare and broadcast information (e.g. sensor data) via the CAN bus (consisting of two wires, CAN low and CAN high). The broadcasted data is accepted by all other ECUs on the CAN network - and each ECU can then check the data and decide whether to receive or ignore it.
+- 3.Extremely robust: The system is robust towards electric disturbances and electromagnetic interference - ideal for safety critical applications (e.g. vehicles)
+- 4.Efficient: CAN frames are prioritized by ID so that top priority data gets immediate bus access, without causing interruption of other frames. For each device the data in a frame is transmitted sequentially but in such a way that if more than one device transmits at the same time the highest priority device is able to continue while the others back off. 
+- History: Pre CAN: Car ECUs relied on complex point-to-point wiring. 1986: Bosch developed the CAN protocol as a solution. 1993: CAN is adopted as international standard (ISO 11898). 2015: The CAN FD protocol is standardized (ISO 11898-1). 2016: The physical CAN layer for data-rates up to 5 Mbit/s standardized in ISO 11898-2. Today, CAN is standard in automotives (cars, trucks, buses, industrial vehicle,...), industrial automation, ships, planes, EV batteries, machinery, drone, submarines, radar systems, robotics and more. 
+- ISO 11898-1 describes the data link layer: A standard CAN frame with 11 bits identifier (CAN 2.0A), which is the type used in most cars. The extended 29-bit identifier frame (CAN 2.0B) is identical except the longer ID. Note that the CAN ID, Control and Data are highlighted - these are important when recording CAN bus data.
+  - SOF: The Start of Frame is a 'dominant 0' to tell the other nodes that a CAN node intends to talk
+  - ID: The ID is the frame identifier - lower values have higher priority
+  - RTR: The Remote Transmission Request indicates whether a node sends data or requests dedicated data from another node
+  - Control: The Control contains the Identifier Extension Bit (IDE) which is a 'dominant 0' for 11-bit. It also contains the 4 bit Data Length Code (DLC) that specifies the length of the data bytes to be transmitted (0 to 8 bytes)
+  - Data: The Data contains the data bytes aka payload, which includes CAN signals that can be extracted and decoded for information
+  - CRC: The Cyclic Redundancy Check is used to ensure data integrity
+  - ACK: The ACK slot indicates if the node has acknowledged and received the data correctly
+  - EOF: The EOF marks the end of the CAN frame
+- ISO 11898-2 describes the physical layer: 1.Baud rate: CAN nodes must be connected via a two wire bus with baud rates up to 1 Mbit/s (Classical CAN) or 5 Mbit/s (CAN FD). 2.Cable length: Maximal CAN cable lengths should be between 500 meters (125 kbit/s) and 40 meters (1 Mbit/s). 3.Termination: The CAN bus must be properly terminated using a 120 Ohms CAN bus termination resistor at each end of the bus
+- How to log CAN bus data? As mentioned, two CAN fields are important for CAN logging: The CAN ID and the Data. To record CAN data you need a CAN logger. This lets you log timestamped CAN data to an SD card. In some cases, you need a CAN interface to stream data to a PC - e.g. for car hacking.
+- The CAN provides the basis for communication - but not a lot more. For example, the CAN standard does not specify how to handle messages larger than 8 bytes - or how to decode the raw data. Therefore a set of standardized protocols exist to further specify how data is communicated between CAN nodes of a given network. Some of the most common standards include SAE J1939, OBD2 and CANopen. Further, these higher-layer protocols will increasingly be based on the 'next generation' of CAN, CAN FD (e.g. CANopen FD and J1939-17/22).
+-  CANopen is used widely in embedded control applications, incl. e.g. industrial automation. It is based on CAN, meaning that a CAN bus data logger is also able to log CANopen data. This is key in e.g. machine diagnostics or optimizing production. 
 
 # CANOpen
 https://www.youtube.com/watch?v=DlbkWryzJqg
@@ -147,8 +167,10 @@ Read the details in:
 [11] https://en.wikipedia.org/wiki/EtherCAT
 [12] https://en.wikipedia.org/wiki/USB  
 [13] USB3.1: https://www.synopsys.com/designware-ip/technical-bulletin/protocol-layer-changes.html  
+[14] https://en.wikipedia.org/wiki/CAN_bus 
+[15] https://www.csselectronics.com/screen/page/simple-intro-to-can-bus
 
 [] EtherCAT v.s. CANOpen: https://dewesoft.com/daq/what-is-ethercat-protocol
-[] Comparison1: http://ucpros.com/work%20samples/Microcontroller%20Communication%20Interfaces%203.htm  
-[] Comparison2: https://blog.servo2go.com/2013/09/23/comparing-canopen-and-ethercat-fieldbus-networks/  
-[] Comparison3: https://blog.csdn.net/djl806943371/article/details/89331048  
+[] EtherCAT v.s. CANOpen v.s RS: https://blog.servo2go.com/2013/09/23/comparing-canopen-and-ethercat-fieldbus-networks/  
+[] Ethernet v.s. CAN v.s. RS v.s USB v.s LIN: http://ucpros.com/work%20samples/Microcontroller%20Communication%20Interfaces%203.htm    
+[] Inspired from: https://blog.csdn.net/djl806943371/article/details/89331048  
