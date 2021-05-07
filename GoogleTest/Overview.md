@@ -47,6 +47,27 @@ int main(int argc, char **argv)
 [==========] 1 test from 1 test case ran. (0 ms total)
 [  PASSED  ] 1 test.
 ```
+```
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from AccountTest
+[ RUN      ] AccountTest.BankAccountStartsEmpty
+/local3/mnt/workspace/shanlee/Scenescape/omni-6357/scenescape/FirstParty/Scenescape/apps/scenescape-offline.cpp:19: Failure
+Expected equality of these values:
+  1
+  account.balance
+    Which is: 0
+[  FAILED  ] AccountTest.BankAccountStartsEmpty (0 ms)
+[----------] 1 test from AccountTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (0 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] AccountTest.BankAccountStartsEmpty
+
+ 1 FAILED TEST
+```
 
 # 2. TEST_F
 - Using fixture, instead of newing the object in each test
