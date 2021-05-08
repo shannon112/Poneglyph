@@ -169,7 +169,7 @@ struct BankAccountTest : testing::Test
         account = new BankAccount();
     }
 
-    ~BankAccountTest()
+    virtual ~BankAccountTest()
     {
         delete account;
     }
