@@ -7,9 +7,9 @@
 | 升       | 24 | 25 | 19 | 26 | 27 |
 | 水壺袋     | V | X  | V | V | V |
 | 筆電袋     | V | V | X | V | V |
-| 多重內袋    | V | V | X | X |
+| 多重內袋    | V | V | X | X | V |
 | 開口       | Y型 | 束口| Y型 | 束口 | Y型 |
 | 胸帶       | V | V | V | V | V |
-| 腰帶       | X | X | V | V |
-| 背負       | 偏硬 | 偏硬| 偏軟 |偏軟 |
+| 腰帶       | X | X | V | V | V |
+| 背負       | 偏硬 | 偏硬| 偏軟 |偏軟 | 偏硬 |
 | 連結       | https://www.rockland.com.tw/product/detail649 | https://www.rockland.com.tw/product/detail1997 | https://www.rockland.com.tw/product/detail648 | https://www.rockland.com.tw/product/detail1133 | https://www.rockland.com.tw/product/detail650 |
