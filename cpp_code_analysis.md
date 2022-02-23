@@ -40,7 +40,30 @@
   - BBV is an experimental SimPoint basic block vector generator. It is useful to people doing computer architecture research and development.
 - Check list: https://valgrind.org/docs/manual/manual.html section.4~13
 
-ThreadSanitizer
-MemorySanitizer
-AddressSanitizer
-UndefinedBehaviorSanitizer
+## Sanitizer
+- It consists of a compiler instrumentation module and a run-time library.
+
+### AddressSanitizer
+- Official site: https://clang.llvm.org/docs/AddressSanitizer.html
+- Slow down 2x
+- Can only be used independently 
+- Fast memory error detector (overflow, leaks, use-after-, init, etc.)
+- Check list: https://github.com/google/sanitizers/wiki/AddressSanitizer
+
+### ThreadSanitizer
+- Official site: https://clang.llvm.org/docs/ThreadSanitizer.html
+- Slow down 5x-15x
+- Can only be used independently 
+- Detect data races
+- Check list: https://github.com/google/sanitizers/wiki/ThreadSanitizerDetectableBugs
+
+### MemorySanitizer
+- Can only be used independently 
+
+### UndefinedBehaviorSanitizer
+- Can use together with others
+
+### LeakSanitizer
+- Can use together with AddressSanitizer
+
+### DataFlowSanitizer
