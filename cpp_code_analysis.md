@@ -42,28 +42,31 @@
 
 ## Sanitizer
 - It consists of a compiler instrumentation module and a run-time library.
+- Content: https://clang.llvm.org/docs/index.html
 
 ### AddressSanitizer
 - Official site: https://clang.llvm.org/docs/AddressSanitizer.html
-- Slow down 2x
 - Can only be used independently 
 - Fast memory error detector (overflow, leaks, use-after-, init, etc.)
 - Check list: https://github.com/google/sanitizers/wiki/AddressSanitizer
 
 ### ThreadSanitizer
 - Official site: https://clang.llvm.org/docs/ThreadSanitizer.html
-- Slow down 5x-15x
 - Can only be used independently 
 - Detect data races
 - Check list: https://github.com/google/sanitizers/wiki/ThreadSanitizerDetectableBugs
 
 ### MemorySanitizer
+- Official site: https://clang.llvm.org/docs/MemorySanitizer.html
 - Can only be used independently 
+- Detect uninitialized reads
+- Check list: https://clang.llvm.org/docs/MemorySanitizer.html#ignorelist
 
 ### UndefinedBehaviorSanitizer
-- Can use together with others
+- Can use together with others. It has an optional run-time library.
+- Catch various kinds of undefined behavior during program execution
+- Check list: https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html#ubsan-checks
 
 ### LeakSanitizer
 - Can use together with AddressSanitizer
-
-### DataFlowSanitizer
+- It can be combined with AddressSanitizer to get both memory error and leak detection
