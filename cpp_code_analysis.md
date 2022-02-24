@@ -70,3 +70,14 @@
 ### LeakSanitizer
 - Can use together with AddressSanitizer
 - It can be combined with AddressSanitizer to get both memory error and leak detection
+
+# Summary
+| Tool | Analysis | Detector | Dependence |
+| ---- | -------- | -------- | ---------- |
+| cppchecker | static | general | standalone |
+| clang-tidy | static | style   | with clang |
+| valgrind | dynamic | memory & thread & uninitialized | standalone |
+| asan & lsan | dynamic | memory | with clang |
+| tsan | dynamic | thread | with clang |
+| msan | dynamic | uninitialized | with clang |
+| ubsan | dynamic | undefined behavior | with clang |
