@@ -34,9 +34,10 @@
 - 查詢的地點在：https://international.schwab.com/，然後進history，就會能看到提款記錄
 <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjcOAt3mhh3R9BaLASRdsf854_9i6koFuwvouoDheLdduyMFl5O2cYcd_uvJYJDtDQ8kZFODgYINE8IB8zTV7-byc3vj246ZUr9NSZCYqp739-T0FyiWw0SRgo3DbDlRcLf-8GsG7zHLp4J72-e-i0UTgKjfIL7xZZaGHRJ15TMfN5hWM4fkz_pHLLR/w640-h166/Screen%20Shot%202023-06-04%20at%202.51.50%20AM.png">  
 
-同樣都是100元台幣，以下是當天的收據
+同樣都是100元台幣，以下是實測結果
 - 1. 立即匯率轉換 (Immediate Conversion): 
-  - 100 / 3.42 = 29.2397661 (台幣/1美元) 比 30.58 * 0.96 = 29.35 更少!! 真的有點虧
+  - 100 / 3.42 = 29.2397661 (台幣/1美元)
+  - 按照第二點defer法的匯率回推，他要收4%，也就是30.58 * 0.96 應該也要是 29.35，所以法一真的不是很划算
 - 2. 延後匯率轉換 (Defer Conversion): 
   - 100 / 3.27 = 30.5810398 (台幣/1美元) 大約等於VISA當天的匯率
 - 3. VISA匯率 (https://www.bestxrate.com/card/visa/usd.html)
@@ -60,5 +61,24 @@
 
 <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi8DmSh8jjMS4cJWJQkzJ2VqVp_HhC7S96lC4-5Sn_kYN-4ktCT6trHQKk40_h80NeViKJofmb98FoAbV00VmQy5AoPJzOp6MNDcQ5tUkLIFtZfGyWgoUywrJlrOOFrHh6LPjmMouOuWHi4lbuktLi8qsxg8BFNuEFin33lpbFKX7PJVvoO5GB-9ri0/s1752/Screenshot%202023-06-04%20042401.png">
 
-# 6.後記 2024.08
+# 6.後記 2024.08 大筆提領
+終於到了真的該提款的時候，0802和0805的兩天小股災，第一天盤中跌幅達千點，第二天跌1800點，該提點美金來過生活或抄底了。
+- 關於規則 在官網上我沒有查到到底寫在哪裡 但網路上流傳是 每日1000鎂 單筆500鎂
+- 畢竟也已經停止發卡了(2023.08) 資訊可能會越來越少 [https://rich01.com/schwab-debit-card-taiwanese-account-canceled/](https://rich01.com/schwab-debit-card-taiwanese-account-canceled/)
 
+於是這次又跑去全聯提領
+- 第一次提領：領20000台幣 (約617鎂)，提款機顯示失敗，雖然輸入前明明就說上限是兩萬。
+- 第二次提領：領15000台幣 (約462鎂)，成功！
+- 第三次提領：領15000台幣 (約462鎂)，又成功！
+- 第四次提領：領15000台幣 (約462鎂)，提款機顯示失敗，完全驗證了，單筆500鎂，單日1000鎂的限制。
+
+<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgt7PNR5HoiMtze2MLClS4WD5Hd88ShRQB6n4nmZOTgnq4CcgxxRfx88hycGvCkCBqWthnEblmsdC7SJAnK4-eOn9-X1tvuQrAEES-uPRrmoeBkIhrXMKdKNnnAPkhoC6B4rXUMgnI7M-vIHbPdOiGCInTqXbnhoJ1i8dnbkkgVvkyry81Cgov6TZUwBeA/w640-h266/%E6%88%AA%E5%9C%96%202024-08-12%20%E4%B8%8A%E5%8D%882.19.33.png">
+<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh2JksL0b193L9N5FijPYtZjNxeFr0oSuFD8PAX9gSnuTrn8pFQpX7QVam3kVFPdMUa_cSc2hzfVgZKUdhOjsrHCzP2IJPcDLhJmGtpDEf02CbHFwVUbOWZwqmJ68rwxx0X_xn4UnJKbGLhUsYfKRYpS2ltkx1aCqbOLc7xv9YCckObYm3RdHpWHVadaT4/w506-h640/%E6%88%AA%E5%9C%96%202024-08-12%20%E4%B8%8A%E5%8D%882.19.57.png">
+<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh2lszKfXzFbk8vh8qEdww3jLJODfPOAlnVuOZLtfr4reNr-hS8b2BVXf_VumKFf9fyzY_7-KoyQjBimtyK1TN-2u1yb3Q4pDFTwuu5cACB-UdXBSyy9GOdxcb4zABNF_u6Gdg905IgyreHWvDz5lpGYv6YlfSsLU4gRJGU5ojmCrtq_DG0Kqikk9ueIxE/w640-h468/%E6%88%AA%E5%9C%96%202024-08-12%20%E4%B8%8A%E5%8D%882.20.08.png">
+
+ㄧ樣的是因為是選defer
+- 所以app或是網站上都不會這麼快反映在history上
+- 而且這次觀察到其實收據上也沒有反應
+- 餘額還是顯示目前帳戶中的現金美金換算台幣是多少
+
+結論，那就還是500鎂,1000鎂的慢慢領吧
